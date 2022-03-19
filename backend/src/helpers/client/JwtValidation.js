@@ -26,4 +26,5 @@ const comparePassword = async (password, user, res,role) => {
         })
 }
 
+
 module.exports = { comparePassword }

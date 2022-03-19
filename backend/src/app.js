@@ -10,16 +10,19 @@ app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(`${__dirname}/src`))
-mongoose.set('useUnifiedTopology', true);
-mongoose.set('useNewUrlParser', true);
 
-mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true, useUnifiedTopology: true }, () => {
+
+mongoose.connect(process.env.DB_CONNECTION, () => {
     console.log('Database Connected')
 })
 
 const clientRoutes = require('./routes/client/client.routes')
 
 app.use('/api/clients', clientRoutes)
+
+const superAdminRoutes = require('./routes/superAdmin/superAdmin.routes')
+app.use('/api/superAdmin', superAdminRoutes)
+
 
 
 app.listen(process.env.PORT, () => {
