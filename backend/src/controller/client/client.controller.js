@@ -11,7 +11,7 @@ const loginClient = async (req, res) => {
         if (!email || !password) return res.status(404).json({ message: "Please fill all the fields" }) // input validation
         const existingClient = await clients.findOne({ email }) // find user data with email
         if (!existingClient) return res.status(404).json({ message: "client not found"}) // error message
-        comparePassword(password, existingAdmin, res) // comporassion password && data => jwt
+        comparePassword(password, existingClient, res) // comporassion password && data => jwt
     } catch (error) {
         res.status(404).json({ message: error.message }) // req error
     }

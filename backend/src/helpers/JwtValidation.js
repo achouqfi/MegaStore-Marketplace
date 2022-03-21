@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 //compared password function
-const comparePassword = async (password, user, res,role) => {
+const comparePassword = async (password, user,role ,res) => {
     //brypting password
     bcrypt.compare(password,user.password)
         .then((isCorrect) => {
