@@ -1,23 +1,23 @@
-const express = require('express');
-const router = express.Router();
+// const express = require('express');
+// const router = express.Router();
 // const fs = require('fs');
 // const morgan = require('morgan')
 
 //router vendeur
-const {
-    store,
-    loginvendeur,
-    index,
-    deletevendeur,
-} = require('../../controller/vendeur/vendeur.controller')
+// const {
+//     store,
+//     loginvendeur,
+//     index,
+//     deletevendeur,
+// } = require('../../controller/vendeur/vendeur.controller')
 
-router.get('/vendeur', index) 
-router.post('/vendeur/store', store)
-router.delete('/vendeur:id', deletevendeur)
-router.post('/vendeur/login',loginvendeur)
+// router.get('/vendeur', index) 
+// router.post('/vendeur/store', store)
+// router.delete('/vendeur:id', deletevendeur)
+// router.post('/vendeur/login',loginvendeur)
 
 
-//retour produit
+// //retour produit
 // const {
 //     store,
 //     index,
@@ -32,5 +32,16 @@ router.post('/vendeur/login',loginvendeur)
 
 
 
+
+// module.exports = router;
+
+const vendeur = require("../../controller/vendeur/vendeur.controller")
+const vente = require("../../controller/vendeur/vente.controller")
+const express = require("express")
+const router = express.Router();
+
+
+router.get('/vendeur', vendeur.index);
+router.get('/vente', vente.index);
 
 module.exports = router;
