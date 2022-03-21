@@ -5,6 +5,8 @@ const cors = require('cors')
 const app = express()
 require('dotenv').config();
  
+
+
 app.use(cors())
 app.use(cookieParser())
 app.use(express.json())
@@ -15,7 +17,7 @@ app.use(express.static(`${__dirname}/src`))
 mongoose.connect(process.env.DB_CONNECTION, () => {
     console.log('Database Connected')
 })
-
+  
 const clientRoutes = require('./routes/client/client.routes')
 
 app.use('/api/clients', clientRoutes)
