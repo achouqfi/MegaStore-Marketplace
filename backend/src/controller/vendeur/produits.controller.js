@@ -3,21 +3,20 @@ const produits = require("../../models/produit/produit.model");
 // get all produit 
 const index = async (req, res) => {
     try {
-        const produit = await produits.find() 
+        const produit = await produits.find().populate("categorie") 
         res.status(200).json(produit)
     } catch (error) {
         res.status(404).json({ message: error.message })
     }
 }
 
-
 //create new produit
 const store = async (req, res) => {
     //get body from http req 
-    const { Name,prix,quantite,images,categorie} = req.body
+    const { Name,prix,quantite,images,marque,categorie} = req.body
     //console.log(req.body);
     try {
-        if (!Name || !prix || !quantite || !images || !categorie)
+        if (!Name || !prix || !quantite || !images || !marque ||!categorie)
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
 
         
@@ -28,6 +27,7 @@ const store = async (req, res) => {
                 prix,
                 quantite,
                 images,
+                marque,
                 categorie
             })
               
@@ -50,10 +50,10 @@ const deleteproduit = async (req, res) => {
 //Update  produit
 const update = async (req, res) => {
     //get body from http req 
-    const {Name,prix,quantite,images,categorie} = req.body
+    const {Name,prix,quantite,images,marque,categorie} = req.body
     //console.log(req.body);
     try {
-        if (!Name || !prix || !quantite || !images || !categorie)
+        if (!Name || !prix || !quantite || !images || !marque || !categorie)
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
       
         const newproduit = await produits.put({
@@ -61,6 +61,7 @@ const update = async (req, res) => {
             prix:prix,
             quantite:quantite,
             images:images,
+            marque:marque,
             categorie:categorie
         })
      
@@ -76,5 +77,5 @@ module.exports = {
     index,
     store,
     deleteproduit,
-    update 
+    update  
 };

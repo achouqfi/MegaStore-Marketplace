@@ -1,6 +1,6 @@
 const clients = require("../../models/client/client.model");
 const bcrypt = require('bcryptjs')
-const { comparePassword } = require('../../helpers/client/JwtValidation')
+const { comparePassword } = require('../../helpers/JwtValidation')
 const { PasswordMail } = require('../../utils/client/mail')
 
 //login client

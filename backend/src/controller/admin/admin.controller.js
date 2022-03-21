@@ -1,6 +1,6 @@
 const admin = require('../../models/admin/admin.model');
 const bcrypt = require('bcryptjs');
-const { comparePassword } = require('../../helpers/client/JwtValidation');
+const { comparePassword } = require('../../helpers/JwtValidation');
 const { PasswordMail } = require('../../utils/admin/mail');
 
 // create admin

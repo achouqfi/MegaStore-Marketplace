@@ -26,6 +26,10 @@ app.use('/api/superAdmin', superAdminRoutes)
 const AdminRoutes = require('./routes/admin/admin.routes')
 app.use('/api/admin', AdminRoutes)
 
+const vendeurRoutes = require('./routes/vendeur/vendeur.routes')
+app.use('/api/vendeur', vendeurRoutes)
+
+
 
 app.listen(process.env.PORT, () => {
     console.log(`up and running at http://localhost:${process.env.PORT}`);

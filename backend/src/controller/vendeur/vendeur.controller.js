@@ -1,8 +1,9 @@
 const vendeurs = require("../../models/vendeur/vendeur.model");
-const bcrypt = require('bcryptjs')
-const { comparePassword } = require('../../helpers/vendeur/JwtValidation')
-const { PasswordMail } = require('../../utils/vendeur/mail')
-
+const bcrypt = require('bcryptjs');
+const { comparePassword } = require('../../helpers/JwtValidation');
+const { PasswordMail } = require('../../utils/vendeur/mail');
+const ventes =require("../../controller/vendeur/vente.controller");
+const typecomptes =require("../../controller/vendeur/typecompte.controller");
 //login vendeur
 const loginvendeur = async (req, res) => {
     //get body from http req 
@@ -20,7 +21,7 @@ const loginvendeur = async (req, res) => {
 // get all vendeur 
 const index = async (req, res) => {
     try {
-        const vendeur = await vendeurs.find() 
+        const vendeur = await vendeurs.find().populate("typecompte")
         res.status(200).json(vendeur)
     } catch (error) {
         res.status(404).json({ message: error.message })
@@ -31,7 +32,7 @@ const index = async (req, res) => {
 // create new vendeur
 const store = async (req, res) => {
     //get body from http req 
-    const { email, firstName, lastName , phone ,doc } = req.body
+    const { email, firstName, lastName , phone ,doc ,id} = req.body
     //console.log(req.body);
     try {
         if (!email || !firstName || !lastName || !doc )
@@ -54,8 +55,7 @@ const store = async (req, res) => {
                 password: hashedPassword,
                 phone,
                 doc,
-                typecompte:"Starter",
-                limiteproduit:10,
+                typecompte:id,
                 status:"en cours"
             })
                 // console.log(req.body);
@@ -82,30 +82,46 @@ const deletevendeur = async (req, res) => {
     }
 }
 
-//Update type compte vendeur
+//Update type compte vendeur par (chiffre d’affaire)
 const updatetypecompte = async (req, res) => {
     //get body from http req 
-    const {typecompte} = req.body
-    //console.log(req.body);
+    const {id} = req.body
+    
     try {
-        if (!typecompte)
-            return res.status(400).json({ message: "Please fill all the fields" }) // input validation
-        // const existingManager = await vendeurs.findOne({ email }) //verif if email already exist
-        // if (existingManager) return res.status(400).json({ message: "vendeur already exists" })  //error message
-       
-        if(typecompte=="Pro"){
-            limiteproduit=50;
-        }else{
-            limiteproduit=Number.POSITIVE_INFINITY;
-        }
+        // let vente=ventes.index();
+        // let chiffredeffaire=0;
+        // vente.forEach(element => {
+        //     if(id==element.vendeur.id){
+        //         chiffredeffaire+=element.produit.prix;
+        //     }
+        // });
+        
+        // if(chiffredeffaire>=5000){
+        //     typecomptes.forEach(element => {
+        //         if(element.Name=="Pro"){
+        //         // update  type compte vendeur
+        //             // const newVendeur = await vendeurs.put({
+        //             //     typecompte:element.id
+        //             // })
+        //         }
+        //     });
+
+        // }else if(chiffredeffaire>=20000){
+        //     typecomptes.forEach(element => {
+        //     if(element.Name=="Expert"){
+        //     // update  type compte vendeur
+        //         // const newVendeur = await vendeurs.put({
+        //         //     typecompte:element.id
+        //         // })
+        //     }
+        
+        //  });
+        // }
         // update  type compte vendeur
-        const newVendeur = await vendeurs.put({
-            typecompte:"Starter",
-            limiteproduit:10
-        })
-       // console.log(req.body);
-        PasswordMail(typecompte,limiteproduit) //send email
-        res.status(200).json({ newVendeur })
+        // const newVendeur = await vendeurs.put({
+        //     typecompte:id
+        // })
+     
 
     } catch (err) {
         res.status(400).json({ error: err.message }) // req error
@@ -116,19 +132,16 @@ const updatetypecompte = async (req, res) => {
 const updatestatus = async (req, res) => {
     //get body from http req 
     const {status} = req.body
-    //console.log(req.body);
+ 
     try {
         if (!status)
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
-        // const existingManager = await vendeurs.findOne({ email }) //verif if email already exist
-        // if (existingManager) return res.status(400).json({ message: "vendeur already exists" })  //error message
-       
         // update status compte vendeur
         const newVendeur = await vendeurs.put({
             status:status,
           
         })
-       // console.log(req.body);
+    
         PasswordMail(status) //send email
         res.status(200).json({ newVendeur })
 
@@ -137,18 +150,6 @@ const updatestatus = async (req, res) => {
     }
 }
 
-//chiffre d’affaire
-const chiffredaffaire = async (req, res) => {
-   
-
-    
-    try {
-        
-
-    } catch (err) {
-        res.status(400).json({ error: err.message }) // req error
-    }
-}
 
 module.exports = {
     index,
@@ -157,5 +158,5 @@ module.exports = {
     deletevendeur,
     updatetypecompte,
     updatestatus,
-    chiffredaffaire
+    
 };

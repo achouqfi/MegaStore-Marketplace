@@ -13,12 +13,12 @@ const produit = new mongoose.Schema({
         type: String,
         required: true
     },    
-    images:[
-        {
-            type: String,
-            required: true
-        }
-      ],  
+    images:{type:mongoose.Schema.ObjectId, ref: 'image'}
+      , 
+      marque: {
+        type: String,
+        required: true
+    }, 
    categorie: {type:mongoose.Schema.ObjectId, ref: 'categorie'},
 })
 

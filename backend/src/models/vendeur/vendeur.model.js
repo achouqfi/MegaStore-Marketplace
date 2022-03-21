@@ -25,18 +25,11 @@ const vendeur = new mongoose.Schema({
         type: String,
         required: true
     },
-    typecompte: {
-        type: String,
-        required: true
-    },
-    limiteproduit: {
-        type: Number,
-        required: true
-    },
     status: {
         type: Number,
         required: true
-    }
+    },
+   typecompte: {type:mongoose.Schema.ObjectId, ref: 'typecompte'},
 })
 
 module.exports = mongoose.model('vendeur', vendeur)
