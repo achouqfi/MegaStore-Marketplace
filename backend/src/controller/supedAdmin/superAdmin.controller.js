@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 const {
     comparePassword,
     generateToken
-} = require('../../helpers/client/JwtValidation')
+} = require('../../helpers/JwtValidation')
 const {
     PasswordMail
 } = require('../../utils/client/mail')

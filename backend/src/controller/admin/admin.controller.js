@@ -1,7 +1,24 @@
 const admin = require('../../models/admin/admin.model');
 const bcrypt = require('bcryptjs');
-const { comparePassword } = require('../../helpers/client/JwtValidation');
+const { comparePassword } = require('../../helpers/JwtValidation');
 const { PasswordMail } = require('../../utils/admin/mail');
+
+// login
+const login = async(req,res) =>{
+
+    const {email,password} = req.body;
+    try {
+        if (!email || !password) return res.status(404).json({ message: "Please fill all the fields" }) // input validation
+        const existingAdmin = await admin.findOne({email});
+        if(!existingAdmin) return res.status(404).json({ message: "Admin not found"}) // error message
+        const role = 'admin';
+        comparePassword(password, existingAdmin, role, res)
+      
+
+    } catch (error) {
+        res.status(404).json({ message: error.message }) // req error
+    }
+}
 
 // create admin
 const create = async(req,res) =>{
@@ -16,7 +33,7 @@ const create = async(req,res) =>{
 
     try{
 
-        const adminFound = await admin.findOne({email: email})
+        const adminFound = await admin.findOne({email})
 
         if(adminFound) 
             return res.status(400).json({ message: "This mail is already used" }) // check if the email already existed
@@ -38,6 +55,42 @@ const create = async(req,res) =>{
     
 }
 
+// get all admins
+const fetch = (req,res) =>{
+    try {
+
+        admin.find()
+        .then( data => res.status(200).json(data) )
+
+    } catch (error) {
+
+        res.status(404).json({ message: error.message })
+        
+    }
+}
+
+// delete admin
+const deleteAdmin = (req,res) =>{
+    const id = req.params._id;
+
+    admin.findByIdAndDelete(id)
+    .then( data => {
+        if(!data) {
+            res.status(404).send({
+                message: `Admin not found!`
+            });
+        }else{
+            res.status(200).send({
+                message: "Admin deleted successfully!"
+            })
+        }
+    })
+
+}
+
 module.exports = {
-    create
+    create,
+    fetch,
+    deleteAdmin,
+    login
 };
