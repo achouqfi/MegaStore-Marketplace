@@ -76,5 +76,5 @@ module.exports = {
     index,
     store,
     deleteproduit,
-    update
+    update 
 };
