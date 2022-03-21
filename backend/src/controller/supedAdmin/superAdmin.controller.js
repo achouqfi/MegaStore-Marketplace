@@ -1,14 +1,6 @@
 const superAdmin = require('../../models/superAdmin/superAdmin.js')
-const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
-const {
-    comparePassword,
-    generateToken
-} = require('../../helpers/client/JwtValidation')
-const {
-    PasswordMail
-} = require('../../utils/client/mail')
 
 // superAdmin login
 const login = async (req, res) => {
