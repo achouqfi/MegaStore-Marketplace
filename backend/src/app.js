@@ -23,6 +23,8 @@ app.use('/api/clients', clientRoutes)
 const superAdminRoutes = require('./routes/superAdmin/superAdmin.routes')
 app.use('/api/superAdmin', superAdminRoutes)
 
+const AdminRoutes = require('./routes/admin/admin.routes')
+app.use('/api/admin', AdminRoutes)
 
 
 app.listen(process.env.PORT, () => {

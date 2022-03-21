@@ -14,10 +14,10 @@ const PasswordMail = async (email, firstName , lastName,  password ) => {
     const handlebarOptions = {
       viewEngine: {
         extName: '.handlebars',
-        partialsDir: './src/utils/client',
+        partialsDir: './src/utils/vendeur',
         defaultLayout: false,
       },
-      viewPath: './src/utils/client',
+      viewPath: './src/utils/vendeur',
       extName: '.hbs',
     }
     mailTransporter.use('compile', hbs(handlebarOptions))
