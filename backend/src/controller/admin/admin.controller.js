@@ -88,9 +88,25 @@ const deleteAdmin = (req,res) =>{
 
 }
 
+// update password
+const updatePassword = async (req,res) =>{
+    const id = req.params._id;
+
+    try {
+
+        const result = await  admin.findByIdAndUpdate(id , req.body , {new: true})
+        res.status(200).json({ message: "Admin updated successfully" })    
+
+    } catch (error) {
+        res.status(400).json({ error: err.message }) // req error
+
+    }
+    
+}
 module.exports = {
     create,
     fetch,
     deleteAdmin,
-    login
+    login,
+    updatePassword
 };
