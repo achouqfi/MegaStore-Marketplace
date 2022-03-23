@@ -14,7 +14,7 @@ const produit = new mongoose.Schema({
         required: true
     },    
     images:{type:mongoose.Schema.ObjectId, ref: 'image'}
-      , 
+      ,
       marque: {
         type: String,
         required: true
