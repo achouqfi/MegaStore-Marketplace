@@ -1,6 +1,5 @@
 const images = require("../../models/vendeur/image.model");
 
-
 // get all image 
 const index = async (req, res) => {
     try {
@@ -14,11 +13,11 @@ const index = async (req, res) => {
 
 // create new image
 const store = async (req, res) => {
-    //get body from http req 
-    const { Name,produit} = req.body
-    //console.log(req.body);
+    
+    const {produit}=req.body
+    const Name=req.file.path
     try {
-        if (!Name || !produit)
+        if (!produit)
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
             // add image
             const newimage = await images.create({
@@ -27,9 +26,9 @@ const store = async (req, res) => {
             })
         res.status(200).json({ newimage })
 
-        } catch (err) {
-            res.status(400).json({ error: err.message }) //req error
-        }
+    } catch (err) {
+        res.status(400).json({ error: err.message }) //req error
+    }
 }
 
 //delete image

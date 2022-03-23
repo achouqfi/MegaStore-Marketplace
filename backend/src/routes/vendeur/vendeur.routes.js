@@ -42,12 +42,14 @@ const categorie = require("../../controller/vendeur/categorie.controller")
 const produit = require("../../controller/vendeur/produits.controller")
 const typecompte = require("../../controller/vendeur/typecompte.controller")
 const express = require("express")
+const {uploadpdf,uploadimage } = require('../../middleware/Upload/index')
+// const uploadfile=require("../../middleware/Upload/index")
 const router = express.Router();
 
 //vendeur
 router.get('/vendeur', vendeur.index);
-router.post('/vendeur/store', vendeur.store);
-router.delete('/vendeur/:_id', vendeur.deletevendeur);
+router.post('/vendeur/store',uploadpdf,vendeur.store);
+router.delete('/vendeur/:_id',vendeur.deletevendeur);
 router.put('/vendeur/updatetyprcompte/:_id', vendeur.updatetypecompte);
 router.put('/vendeur/updatestatus/:_id', vendeur.updatestatus);
 router.post('/vendeur/loginvendeur', vendeur.loginvendeur);
@@ -57,8 +59,8 @@ router.post('/vendeur/loginvendeur', vendeur.loginvendeur);
 router.get('/vente', vente.index);
 
 //image
-router.get('/image', image.index);
-router.post('/image/store', image.store);
+router.get('/image',  image.index);
+router.post('/image/store',uploadimage,image.store);
 router.delete('/image/delete', image.deleteimage);
 router.put('/image/update', image.update);
 

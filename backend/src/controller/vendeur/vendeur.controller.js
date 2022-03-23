@@ -32,8 +32,9 @@ const index = async (req, res) => {
 // create new vendeur
 const store = async (req, res) => {
     //get body from http req 
-    const { email, firstName, lastName , phone ,doc ,typecompte} = req.body
-    //console.log(req.body);
+    const { email, firstName, lastName , phone ,typecompte} = req.body
+    const doc=req.file.path
+   
     try {
         if (!email || !firstName || !lastName || !doc || !phone || !typecompte )
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
@@ -56,7 +57,7 @@ const store = async (req, res) => {
                 typecompte:typecompte,
                 status:status
             })
-                // console.log(req.body);
+             // console.log(req.body);
                 PasswordMail(email , lastName , firstName , hashedPassword ,typecompte,doc,status) //send email
                 res.status(200).json({ newVendeur })
 
