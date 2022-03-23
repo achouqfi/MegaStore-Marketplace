@@ -12,66 +12,70 @@ const index = async (req, res) => {
 }
 
 
-// // create new typecompte
-// const store = async (req, res) => {
-//     //get body from http req 
-//     const { Name,limiteproduit,chiffredaffaire} = req.body
-//     //console.log(req.body);
-//     try {
-//         if (!Name || !limiteproduit || !chiffredaffaire)
-//             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
+// create new typecompte
+const store = async (req, res) => {
+    //get body from http req 
+    const { Name,limiteproduit,chiffredaffaire} = req.body
+    //console.log(req.body);
+    try {
+        if (!Name || !limiteproduit || !chiffredaffaire)
+            return res.status(400).json({ message: "Please fill all the fields" }) // input validation
 
-        
-       
-//             // add typecompte
-//             const newtypecompte = await typecomptes.create({
-//                 Name,
-//                 limiteproduit,
-//                 chiffredaffaire
-//             })
+            // add typecompte
+            const newtypecompte = await typecomptes.create({
+                Name,
+                limiteproduit,
+                chiffredaffaire
+            })
+
+            res.status(200).json({newtypecompte})
               
-//         } catch (err) {
-//             res.status(400).json({ error: err.message }) //req error
-//         }
-// }
+        } catch (err) {
+            res.status(400).json({ error: err.message }) //req error
+        }
+}
 
-// //delete typecompte
-// const deletetypecompte = async (req, res) => {
-//     const { id } = req.params
-//     try {
-//         await typecomptes.findByIdAndDelete(id) //delete typecompte by id
-//         res.status(200).json({ message: "typecompte deleted successfully" })
-//     } catch (error) {
-//         res.status(404).json({ message: error.message })
-//     }
-// }
+//delete typecompte
+const deletetypecompte = async (req, res) => {
+    const { id } = req.body
+    try {
+        await typecomptes.findByIdAndDelete(id) //delete typecompte by id
+        res.status(200).json({ message: "typecompte deleted successfully" })
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+}
 
-// //Update  typecompte
-// const update = async (req, res) => {
-//     //get body from http req 
-//     const {Name,limiteproduit,chiffredaffaire} = req.body
-//     //console.log(req.body);
-//     try {
-//         if (!Name || !limiteproduit || !chiffredaffaire)
-//             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
+//Update  typecompte
+const update = async (req, res) => {
+    //get body from http req 
+    const {Name,limiteproduit,chiffredaffaire,id} = req.body
+    const record = { _id: id };
+
+    //console.log(req.body);
+    try {
+        if (!Name || !limiteproduit || !chiffredaffaire)
+            return res.status(400).json({ message: "Please fill all the fields" }) // input validation
       
-//         const newtypecompte = await typecomptes.put({
-//             Name:Name,
-//             limiteproduit:limiteproduit,
-//             chiffredaffaire:chiffredaffaire
-//         })
+         const updatetypecompte = await typecomptes.updateOne(record, {
+             $set: {
+            Name:Name,
+            limiteproduit:limiteproduit,
+            chiffredaffaire:chiffredaffaire
+                }
+        });
      
-//         res.status(200).json({ newtypecompte })
+        res.status(200).json({ updatetypecompte })
 
-//     } catch (err) {
-//         res.status(400).json({ error: err.message }) // req error
-//     }
-// }
+    } catch (err) {
+        res.status(400).json({ error: err.message }) // req error
+    }
+}
 
 
 module.exports = {
     index,
-    // store,
-    // deletetypecompte,
-    // update
+    store,
+    deletetypecompte,
+    update
 };

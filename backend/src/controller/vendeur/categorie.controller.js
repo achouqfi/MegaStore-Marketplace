@@ -1,4 +1,4 @@
-const categories = require("../../models/categorie/categorie.model");
+const categories = require("../../models/vendeur/categorie.model");
 
 
 // get all categorie 
@@ -21,13 +21,11 @@ const store = async (req, res) => {
         if (!Name )
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
 
-        
-       
             // add categorie
             const newcategorie = await categories.create({
                 Name,
             })
-              
+        res.status(200).json({ newcategorie })
         } catch (err) {
             res.status(400).json({ error: err.message }) //req error
         }
@@ -35,7 +33,7 @@ const store = async (req, res) => {
 
 //delete categorie
 const deletecategorie = async (req, res) => {
-    const { id } = req.params
+    const { id } = req.body
     try {
         await categories.findByIdAndDelete(id) //delete categorie by id
         res.status(200).json({ message: "categorie deleted successfully" })
@@ -45,19 +43,22 @@ const deletecategorie = async (req, res) => {
 }
 
 //Update  categorie
-const update = async (req, res) => {
+const update= async (req, res) => {
     //get body from http req 
-    const {Name} = req.body
-    //console.log(req.body);
+    const {Name,id} = req.body
+    const record = { _id: id };
+   // console.log(req.body);
     try {
         if (!Name)
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
       
-        const newcategorie = await categories.put({
-            Name:Name,
-        })
+         const updatecategorie = await categories.updateOne(record, {
+                $set: {
+                    Name:Name,
+                },
+              });
      
-        res.status(200).json({ newcategorie })
+        res.status(200).json({ updatecategorie })
 
     } catch (err) {
         res.status(400).json({ error: err.message }) // req error

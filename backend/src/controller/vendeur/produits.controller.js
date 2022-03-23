@@ -1,4 +1,5 @@
-const produits = require("../../models/produit/produit.model");
+const produits = require("../../models/vendeur/produit.model");
+// const categorie = require("../../models/vendeur/.model");
 
 // get all produit 
 const index = async (req, res) => {
@@ -13,24 +14,22 @@ const index = async (req, res) => {
 //create new produit
 const store = async (req, res) => {
     //get body from http req 
-    const { Name,prix,quantite,images,marque,categorie} = req.body
-    //console.log(req.body);
+    const { Name, prix, quantite, marque, categorie} = req.body
+    console.log(req.body);
     try {
-        if (!Name || !prix || !quantite || !images || !marque ||!categorie)
+        if (!Name || !prix || !quantite  || !marque ||!categorie)
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
 
-        
-       
             // add produit
             const newproduit = await produits.create({
                 Name,
                 prix,
                 quantite,
-                images,
                 marque,
                 categorie
             })
               
+            res.status(200).json({newproduit})
         } catch (err) {
             res.status(400).json({ error: err.message }) //req error
         }
@@ -38,7 +37,7 @@ const store = async (req, res) => {
 
 //delete produit
 const deleteproduit = async (req, res) => {
-    const { id } = req.params
+    const { id } = req.body
     try {
         await produits.findByIdAndDelete(id) //delete produit by id
         res.status(200).json({ message: "produit deleted successfully" })
@@ -50,22 +49,23 @@ const deleteproduit = async (req, res) => {
 //Update  produit
 const update = async (req, res) => {
     //get body from http req 
-    const {Name,prix,quantite,images,marque,categorie} = req.body
+    const {Name,prix,quantite,marque,categorie,id} = req.body
+    const record = { _id: id };
     //console.log(req.body);
     try {
-        if (!Name || !prix || !quantite || !images || !marque || !categorie)
+        if (!Name || !prix || !quantite  || !categorie)
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
-      
-        const newproduit = await produits.put({
+        const updateproduit = await produits.updateOne(record, {
+            $set: {
             Name:Name,
             prix:prix,
             quantite:quantite,
-            images:images,
             marque:marque,
             categorie:categorie
-        })
-     
-        res.status(200).json({ newproduit })
+        },
+
+    });
+        res.status(200).json({ updateproduit })
 
     } catch (err) {
         res.status(400).json({ error: err.message }) // req error

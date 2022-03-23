@@ -32,34 +32,32 @@ const index = async (req, res) => {
 // create new vendeur
 const store = async (req, res) => {
     //get body from http req 
-    const { email, firstName, lastName , phone ,doc ,id} = req.body
+    const { email, firstName, lastName , phone ,doc ,typecompte} = req.body
     //console.log(req.body);
     try {
-        if (!email || !firstName || !lastName || !doc )
+        if (!email || !firstName || !lastName || !doc || !phone || !typecompte )
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
 
-        // const existingManager = await vendeurs.findOne({ email }) //verif if email already exist
-        // if (existingManager) return res.status(400).json({ message: "vendeur already exists" })  //error message
         let password = Math.random().toString(20).substring(2, 10) //generate password
         const hashedPassword = await bcrypt.hash(password, 10) //hashing password 
-        
+        const status="en cours"
         //validation email
         let regix = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         let emailvalide=regix.test(email);
         if(emailvalide){
             // add vendeur
             const newVendeur = await vendeurs.create({
-                emailvalide,
+                email,
                 firstName,
                 lastName,
                 password: hashedPassword,
                 phone,
                 doc,
-                typecompte:id,
-                status:"en cours"
+                typecompte:typecompte,
+                status:status
             })
                 // console.log(req.body);
-                PasswordMail(email , lastName , firstName , password ,typecompte,limiteproduit,doc,status) //send email
+                PasswordMail(email , lastName , firstName , hashedPassword ,typecompte,doc,status) //send email
                 res.status(200).json({ newVendeur })
 
         }else{
@@ -73,7 +71,7 @@ const store = async (req, res) => {
 
 //delete vendeur
 const deletevendeur = async (req, res) => {
-    const { id } = req.params
+    const { id } = req.body
     try {
         await vendeurs.findByIdAndDelete(id) //delete vendeur by id
         res.status(200).json({ message: "vendeur deleted successfully" })
@@ -85,40 +83,48 @@ const deletevendeur = async (req, res) => {
 //Update type compte vendeur par (chiffre d’affaire)
 const updatetypecompte = async (req, res) => {
     //get body from http req 
-    const {id} = req.body
+    // const {id} = req.body
+    // const record = { _id: id };
     
     try {
         // let vente=ventes.index();
-        // let chiffredeffaire=0;
+        //let chiffredeffaire=0;
         // vente.forEach(element => {
         //     if(id==element.vendeur.id){
         //         chiffredeffaire+=element.produit.prix;
         //     }
         // });
         
-        // if(chiffredeffaire>=5000){
-        //     typecomptes.forEach(element => {
-        //         if(element.Name=="Pro"){
-        //         // update  type compte vendeur
-        //             // const newVendeur = await vendeurs.put({
-        //             //     typecompte:element.id
-        //             // })
-        //         }
-        //     });
+        // if(chiffredeffaire > 5000){
+            // typecomptes.forEach(element => {
+            //     if(element.Name=="Pro"){
+               // update  type compte vendeur
+            //    const updatevendeur = await vendeurs.updateOne(record, {
+            //     $set: {
+            //             typecompte:element.id
+            //       }
+            //   })
+            //   res.status(200).json({ updatevendeur })
 
-        // }else if(chiffredeffaire>=20000){
+                // }
+            // });
+
+        // }else if(chiffredeffaire > 20000){
         //     typecomptes.forEach(element => {
         //     if(element.Name=="Expert"){
         //     // update  type compte vendeur
-        //         // const newVendeur = await vendeurs.put({
-        //         //     typecompte:element.id
-        //         // })
+        //     const updatevendeur = await vendeurs.updateOne(record, {
+        //         $set: {
+        //                 typecompte:element.id
+        //           }
+        //       })
+        //       res.status(200).json({ updatevendeur })
         //     }
         
         //  });
         // }
-        // update  type compte vendeur
-        // const newVendeur = await vendeurs.put({
+      //  update  type compte vendeur
+        // const newVendeur =  vendeurs.update({
         //     typecompte:id
         // })
      

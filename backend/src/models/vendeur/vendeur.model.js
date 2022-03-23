@@ -26,7 +26,7 @@ const vendeur = new mongoose.Schema({
         required: true
     },
     status: {
-        type: Number,
+        type: String,
         required: true
     },
    typecompte: {type:mongoose.Schema.ObjectId, ref: 'typecompte'},

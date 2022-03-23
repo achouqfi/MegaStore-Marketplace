@@ -6,7 +6,7 @@ const typecompte = new mongoose.Schema({
         required: true
     },
     limiteproduit: {
-        type: Number,
+        type: String,
         required: true
     },
     chiffredaffaire: {

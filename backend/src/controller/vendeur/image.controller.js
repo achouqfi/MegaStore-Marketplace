@@ -1,4 +1,4 @@
-const images = require("../../models/image/image.model");
+const images = require("../../models/vendeur/image.model");
 
 
 // get all image 
@@ -15,19 +15,18 @@ const index = async (req, res) => {
 // create new image
 const store = async (req, res) => {
     //get body from http req 
-    const { Name} = req.body
+    const { Name,produit} = req.body
     //console.log(req.body);
     try {
-        if (!Name )
+        if (!Name || !produit)
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
-
-        
-       
             // add image
             const newimage = await images.create({
                 Name,
+                produit
             })
-              
+        res.status(200).json({ newimage })
+
         } catch (err) {
             res.status(400).json({ error: err.message }) //req error
         }
@@ -35,7 +34,7 @@ const store = async (req, res) => {
 
 //delete image
 const deleteimage = async (req, res) => {
-    const { id } = req.params
+    const { id } = req.body
     try {
         await images.findByIdAndDelete(id) //delete image by id
         res.status(200).json({ message: "image deleted successfully" })
@@ -47,17 +46,21 @@ const deleteimage = async (req, res) => {
 //Update  image
 const update = async (req, res) => {
     //get body from http req 
-    const {Name} = req.body
-    //console.log(req.body);
+    const {Name,produit,id} = req.body
+    const record = { _id: id };
+    console.log(req.body);
     try {
-        if (!Name)
+        if (!Name || !produit)
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
       
-        const newimage = await images.put({
+        const updateimage = await images.updateOne(record, {
+                $set: {
             Name:Name,
-        })
+            produit:produit
+                }
+        });
      
-        res.status(200).json({ newimage })
+        res.status(200).json({ updateimage })
 
     } catch (err) {
         res.status(400).json({ error: err.message }) // req error
