@@ -4,7 +4,7 @@ const produits = require("../../models/vendeur/produit.model");
 // get all produit 
 const index = async (req, res) => {
     try {
-        const produit = await produits.find().populate("categorie") 
+        const produit = await produits.find().populate("categorie").populate("vendeur") 
         res.status(200).json(produit)
     } catch (error) {
         res.status(404).json({ message: error.message })
@@ -14,10 +14,10 @@ const index = async (req, res) => {
 //create new produit
 const store = async (req, res) => {
     //get body from http req 
-    const { Name, prix, quantite, marque, categorie} = req.body
+    const { Name, prix, quantite, marque, categorie,vendeur} = req.body
     console.log(req.body);
     try {
-        if (!Name || !prix || !quantite  || !marque ||!categorie)
+        if (!Name || !prix || !quantite  || !marque ||!categorie || !vendeur)
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
 
             // add produit
@@ -26,7 +26,8 @@ const store = async (req, res) => {
                 prix,
                 quantite,
                 marque,
-                categorie
+                categorie,
+                vendeur
             })
               
             res.status(200).json({newproduit})
@@ -49,11 +50,11 @@ const deleteproduit = async (req, res) => {
 //Update  produit
 const update = async (req, res) => {
     //get body from http req 
-    const {Name,prix,quantite,marque,categorie,id} = req.body
+    const {Name,prix,quantite,marque,categorie,id,vendeur} = req.body
     const record = { _id: id };
     //console.log(req.body);
     try {
-        if (!Name || !prix || !quantite  || !categorie)
+        if (!Name || !prix || !quantite  || !categorie || !vendeur)
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
         const updateproduit = await produits.updateOne(record, {
             $set: {
@@ -61,7 +62,8 @@ const update = async (req, res) => {
             prix:prix,
             quantite:quantite,
             marque:marque,
-            categorie:categorie
+            categorie:categorie,
+            vendeur:vendeur
         },
 
     });
