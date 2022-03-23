@@ -31,6 +31,9 @@ app.use('/api/admin', AdminRoutes)
 const vendeurRoutes = require('./routes/vendeur/vendeur.routes')
 app.use('/api/vendeur', vendeurRoutes)
 
+//commande api 
+const commandeRoute = require('./routes/client/commade.routes')
+app.use('/api/commande', commandeRoute)
 
 
 app.listen(process.env.PORT, () => {

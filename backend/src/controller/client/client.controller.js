@@ -7,11 +7,14 @@ const { PasswordMail } = require('../../utils/client/mail')
 const loginClient = async (req, res) => {
     //get body from http req 
     const { email, password } = req.body
+    // console.log(req.body);
     try {
         if (!email || !password) return res.status(404).json({ message: "Please fill all the fields" }) // input validation
         const existingClient = await clients.findOne({ email }) // find user data with email
         if (!existingClient) return res.status(404).json({ message: "client not found"}) // error message
-        comparePassword(password, existingClient, res) // comporassion password && data => jwt
+            // console.log(existingClient);
+        const role = 'client';
+        comparePassword(password, existingClient, role, res) // comporassion password && data => jwt
     } catch (error) {
         res.status(404).json({ message: error.message }) // req error
     }
@@ -30,17 +33,13 @@ const index = async (req, res) => {
 
 // create new client
 const store = async (req, res) => {
-    console.log("jjjjjjjjj");
     //get body from http req 
-    const { email, firstName, lastName , phone } = req.body
-    console.log(req.body);
+    const { email, firstName, lastName , phone ,password} = req.body
     try {
         if (!email || !firstName || !lastName)
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
-
-        // const existingManager = await clients.findOne({ email }) //verif if email already exist
-        // if (existingManager) return res.status(400).json({ message: "client already exists" })  //error message
-        let password = Math.random().toString(20).substring(2, 10) //generate password
+        const existingClient = await clients.findOne({ email }) // find user data with email
+        if (existingClient) return res.status(400).json({ message: "client already exists" })  //error message
         const hashedPassword = await bcrypt.hash(password, 10) //hashing password 
         // add client
         const newManager = await clients.create({
@@ -50,7 +49,6 @@ const store = async (req, res) => {
             password: hashedPassword,
             phone
         })
-        console.log(req.body);
         PasswordMail(email , lastName , firstName , password) //send email
         res.status(200).json({ newManager })
 

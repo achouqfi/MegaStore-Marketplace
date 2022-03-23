@@ -13,7 +13,12 @@ const produit = new mongoose.Schema({
         type: String,
         required: true
     },    
+<<<<<<< HEAD
    
+=======
+    images:{type:mongoose.Schema.ObjectId, ref: 'image'}
+      ,
+>>>>>>> 9847339b785b1cf6830eef0f6badadaab31a3daa
       marque: {
         type: String,
         required: true

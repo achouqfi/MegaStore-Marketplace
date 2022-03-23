@@ -66,7 +66,7 @@ const store = async (req, res) => {
       
     } catch (err) {
         res.status(400).json({ error: err.message }) //req error
-    }
+    } 
 }
 
 //delete vendeur
