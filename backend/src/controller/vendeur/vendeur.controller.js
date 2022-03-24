@@ -39,7 +39,8 @@ const store = async (req, res) => {
         if (!email || !firstName || !lastName  || !password || !doc || !phone || !typecompte )
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
 
-       
+     
+        const hashedPassword = await bcrypt.hash(password, 10) //hashing password 
         const status="en cours"
         //validation email
         let regix = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -50,14 +51,14 @@ const store = async (req, res) => {
                 email,
                 firstName,
                 lastName,
-                password,
+                password: hashedPassword,
                 phone,
                 doc,
                 typecompte:typecompte,
                 status:status
             })
              // console.log(req.body);
-                PasswordMail(email , lastName , firstName,password,typecompte,doc,status) //send email
+                PasswordMail(email , lastName , firstName  ,typecompte,doc,status) //send email
                 res.status(200).json({ newVendeur })
 
         }else{
