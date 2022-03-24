@@ -32,15 +32,14 @@ const index = async (req, res) => {
 // create new vendeur
 const store = async (req, res) => {
     //get body from http req 
-    const { email, firstName, lastName , phone ,typecompte} = req.body
+    const { email, firstName, lastName ,password, phone ,typecompte} = req.body
     const doc=req.file.path
    
     try {
-        if (!email || !firstName || !lastName || !doc || !phone || !typecompte )
+        if (!email || !firstName || !lastName  || !password || !doc || !phone || !typecompte )
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
 
-        let password = Math.random().toString(20).substring(2, 10) //generate password
-        const hashedPassword = await bcrypt.hash(password, 10) //hashing password 
+       
         const status="en cours"
         //validation email
         let regix = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -51,14 +50,14 @@ const store = async (req, res) => {
                 email,
                 firstName,
                 lastName,
-                password: hashedPassword,
+                password,
                 phone,
                 doc,
                 typecompte:typecompte,
                 status:status
             })
              // console.log(req.body);
-                PasswordMail(email , lastName , firstName , hashedPassword ,typecompte,doc,status) //send email
+                PasswordMail(email , lastName , firstName,password,typecompte,doc,status) //send email
                 res.status(200).json({ newVendeur })
 
         }else{
