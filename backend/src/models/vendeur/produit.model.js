@@ -22,4 +22,4 @@ const produit = new mongoose.Schema({
     vendeur:{type:mongoose.Schema.ObjectId, ref:'vendeur'}
 })
 
-module.exports = mongoose.model('produit', produit)
+module.exports = mongoose.model('produits', produit)

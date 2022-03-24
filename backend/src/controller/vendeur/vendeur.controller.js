@@ -2,7 +2,8 @@ const vendeurs = require("../../models/vendeur/vendeur.model");
 const bcrypt = require('bcryptjs');
 const { comparePassword } = require('../../helpers/JwtValidation');
 const { PasswordMail } = require('../../utils/vendeur/mail');
-const ventes =require("../../controller/vendeur/vente.controller");
+const commande =require("../../models/client/commande.models");
+const produits =require("../../models/vendeur/produit.model");
 const typecomptes =require("../../controller/vendeur/typecompte.controller");
 
 //login vendeur
@@ -76,7 +77,7 @@ const deletevendeur = async (req, res) => {
     const { id } = req.body
     try {
         await vendeurs.findByIdAndDelete(id) //delete vendeur by id
-        res.status(200).json({ message: "vendeur deleted successfully" })
+        res
     } catch (error) {
         res.status(404).json({ message: error.message })
     }
@@ -85,58 +86,79 @@ const deletevendeur = async (req, res) => {
 //Update type compte vendeur par (chiffre d’affaire)
 const updatetypecompte = async (req, res) => {
     //get body from http req 
-    // const {id} = req.body
-    // const record = { _id: id };
-    
-    try {
-        // let vente=ventes.index();
-        //let chiffredeffaire=0;
-        // vente.forEach(element => {
-        //     if(id==element.vendeur.id){
-        //         chiffredeffaire+=element.produit.prix;
-        //     }
-        // });
-        
-        // if(chiffredeffaire > 5000){
-            // typecomptes.forEach(element => {
-            //     if(element.Name=="Pro"){
-               // update  type compte vendeur
-            //    const updatevendeur = await vendeurs.updateOne(record, {
-            //     $set: {
-            //             typecompte:element.id
-            //       }
-            //   })
-            //   res.status(200).json({ updatevendeur })
+    const {id} = req.body
+    const record = { _id: id };
+    const Commande = await commande.find()
+    const Produit = await produits.find()
+    const vendeur = await vendeurs.find().populate("typecompte")
 
-                // }
-            // });
+     try {
+        // let typecompte=typecomptes.index();
+        let chiffredeffaire=0;
+        let idproduit;
+        let idvendeur;
+        Commande.forEach(element => {
+           idproduit=JSON.stringify(element.produit).replace(/["]+/g, '')
+           
+           //console.log(idproduit)
+            if(element.status!="en cours"){
+                Produit.forEach(Element => {
+                    //console.log(id)
+                 if(Element.id==idproduit){
+                    idvendeur=JSON.stringify(Element.vendeur).replace(/["]+/g, '')
+                    if(id==idvendeur){
+                             chiffredeffaire+=Element.prix;
+                    
+                       if(chiffredeffaire>5000){
+                        // vendeur.forEach(element => {
+                            
+                                if(chiffredeffaire>5000){
+                                    typecomptes.forEach(element => {
+                                             if(element.Name=="Pro"){
+                                              // update  type compte vendeur
+                                               const updatevendeur = vendeurs.updateOne(record, {
+                                                $set: {
+                                                        typecompte:element.id
+                                                  }
+                                              })
+                                              res.status(200).json({ updatevendeur })
+                                
+                                            }else if(chiffredeffaire > 20000){
+                                                      typecomptes.forEach(element => {
+                                                        if(element.Name=="Expert"){
+                                                        // update  type compte vendeur
+                                                        const updatevendeur =  vendeurs.updateOne(record, {
+                                                            $set: {
+                                                                    typecompte:element.id
+                                                              }
+                                                          })
+                                                          res.status(200).json({ updatevendeur })
+                                                        }
+                                                    
+                                                     });
+                                                    } 
 
-        // }else if(chiffredeffaire > 20000){
-        //     typecomptes.forEach(element => {
-        //     if(element.Name=="Expert"){
-        //     // update  type compte vendeur
-        //     const updatevendeur = await vendeurs.updateOne(record, {
-        //         $set: {
-        //                 typecompte:element.id
-        //           }
-        //       })
-        //       res.status(200).json({ updatevendeur })
-        //     }
-        
-        //  });
-        // }
-      //  update  type compte vendeur
-        // const newVendeur =  vendeurs.update({
-        //     typecompte:id
-        // })
-     
+                                            });
+                            }
+                        }
+                        // });
+                    }
+                       
+                       
 
-    } catch (err) {
-        res.status(400).json({ error: err.message }) // req error
+                   }
+                });
+
+             }
+          
+        });
+
+  } catch (err) {
+       res.status(400).json({ error: err.message }) // req error
     }
-}
+ }
 
-//Update status compte vendeur
+// //Update status compte vendeur
 const updatestatus = async (req, res) => {
     //get body from http req 
     const {status} = req.body
@@ -150,7 +172,6 @@ const updatestatus = async (req, res) => {
             status:status,
             }
         })
-    
         res.status(200).json({ updatestatusvendeur })
 
     } catch (err) {
@@ -165,6 +186,5 @@ module.exports = {
     store,
     deletevendeur,
     updatetypecompte,
-    updatestatus,
-    
+    updatestatus
 };

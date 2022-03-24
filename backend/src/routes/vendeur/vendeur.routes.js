@@ -36,7 +36,6 @@
 // module.exports = router;
 
 const vendeur = require("../../controller/vendeur/vendeur.controller")
-const vente = require("../../controller/vendeur/vente.controller")
 const image = require("../../controller/vendeur/image.controller")
 const categorie = require("../../controller/vendeur/categorie.controller")
 const produit = require("../../controller/vendeur/produits.controller")
@@ -50,13 +49,12 @@ const router = express.Router();
 router.get('/vendeur', vendeur.index);
 router.post('/vendeur/store',uploadpdf,vendeur.store);
 router.delete('/vendeur/delete',vendeur.deletevendeur);
-router.put('/vendeur/updatetyprcompte', vendeur.updatetypecompte);
+router.put('/vendeur/updatetypecompte', vendeur.updatetypecompte);
 router.put('/vendeur/updatestatus', vendeur.updatestatus);
 router.post('/vendeur/loginvendeur', vendeur.loginvendeur);
 
 
-//vente
-router.get('/vente', vente.index);
+
 
 //image
 router.get('/image',  image.index);
