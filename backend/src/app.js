@@ -19,8 +19,9 @@ mongoose.connect(process.env.DB_CONNECTION, () => {
 })
   
 const clientRoutes = require('./routes/client/client.routes')
-
+const commandeRoutes = require('./routes/client/commade.routes')
 app.use('/api/clients', clientRoutes)
+app.use('/api/commandes', commandeRoutes)
 
 const superAdminRoutes = require('./routes/superAdmin/superAdmin.routes')
 app.use('/api/superAdmin', superAdminRoutes)

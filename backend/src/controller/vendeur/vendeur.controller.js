@@ -4,6 +4,7 @@ const { comparePassword } = require('../../helpers/JwtValidation');
 const { PasswordMail } = require('../../utils/vendeur/mail');
 const ventes =require("../../controller/vendeur/vente.controller");
 const typecomptes =require("../../controller/vendeur/typecompte.controller");
+
 //login vendeur
 const loginvendeur = async (req, res) => {
     //get body from http req 
@@ -58,7 +59,7 @@ const store = async (req, res) => {
                 status:status
             })
              // console.log(req.body);
-                PasswordMail(email , lastName , firstName  ,typecompte,doc,status) //send email
+                PasswordMail(email , lastName , firstName ,typecompte,doc,status) //send email
                 res.status(200).json({ newVendeur })
 
         }else{
