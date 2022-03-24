@@ -141,7 +141,7 @@ const updatetypecompte = async (req, res) => {
                                             });
                             }
                         }
-                        // });
+                    
                     }
                        
                        
