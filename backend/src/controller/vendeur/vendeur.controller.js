@@ -139,18 +139,18 @@ const updatetypecompte = async (req, res) => {
 const updatestatus = async (req, res) => {
     //get body from http req 
     const {status} = req.body
- 
+    const record = { _id: id };
     try {
         if (!status)
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
         // update status compte vendeur
-        const newVendeur = await vendeurs.put({
+        const updatestatusvendeur = await vendeurs.updateOne(record, {
+            $set: {
             status:status,
-          
+            }
         })
     
-        PasswordMail(status) //send email
-        res.status(200).json({ newVendeur })
+        res.status(200).json({ updatestatusvendeur })
 
     } catch (err) {
         res.status(400).json({ error: err.message }) // req error

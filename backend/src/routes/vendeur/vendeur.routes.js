@@ -49,9 +49,9 @@ const router = express.Router();
 //vendeur
 router.get('/vendeur', vendeur.index);
 router.post('/vendeur/store',uploadpdf,vendeur.store);
-router.delete('/vendeur/:_id',vendeur.deletevendeur);
-router.put('/vendeur/updatetyprcompte/:_id', vendeur.updatetypecompte);
-router.put('/vendeur/updatestatus/:_id', vendeur.updatestatus);
+router.delete('/vendeur/delete',vendeur.deletevendeur);
+router.put('/vendeur/updatetyprcompte', vendeur.updatetypecompte);
+router.put('/vendeur/updatestatus', vendeur.updatestatus);
 router.post('/vendeur/loginvendeur', vendeur.loginvendeur);
 
 
