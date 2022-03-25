@@ -38,8 +38,21 @@ const store = async (req, res) => {
     }
 }
 
+//update commande status
+const updateStatus  = async (req, res) => {
+    try {
+        const updateStatus = await commande.updateOne(
+            {_id:req.params.id},
+            {$set: { status:req.body.status }}
+        )
+        res.status(200).json(updateStatus)
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+}
 
 module.exports = {
     index,
-    store
+    store,
+    updateStatus
 };
