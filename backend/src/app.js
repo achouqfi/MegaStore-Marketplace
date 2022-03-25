@@ -27,7 +27,9 @@ mongoose.connect(process.env.DB_CONNECTION, () => {
   
 // Client api
 const clientRoutes = require('./routes/client/client.routes')
+const commandeRoutes = require('./routes/client/commade.routes')
 app.use('/api/clients', clientRoutes)
+app.use('/api/commandes', commandeRoutes)
 
 // SuperAdmin api
 const superAdminRoutes = require('./routes/superAdmin/superAdmin.routes')

@@ -4,11 +4,12 @@ const router = express.Router();
 // const morgan = require('morgan')
 const {
     index,
-    store
+    store,
+    updateStatus
 } = require('../../controller/client/commande.contoller')
 
 router.get('/', index) 
 router.post('/store', store)
-// router.delete('/:id', deleteClient)
+router.put('/:id', updateStatus)
 
 module.exports = router;

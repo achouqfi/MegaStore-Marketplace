@@ -18,7 +18,12 @@ const produit = new mongoose.Schema({
         type: String,
         required: true
     }, 
+     images :[{
+        type: String,
+        required: true
+     }],
     categorie: {type:mongoose.Schema.ObjectId, ref:'categorie'},
+    vendeur:{type:mongoose.Schema.ObjectId, ref:'vendeur'}
 })
 
-module.exports = mongoose.model('produit', produit)
+module.exports = mongoose.model('produits', produit)

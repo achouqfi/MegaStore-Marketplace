@@ -9,8 +9,12 @@ const commandeSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-    productId: {type:mongoose.Schema.ObjectId, ref: 'produit'},
-    clientId: {type:mongoose.Schema.ObjectId, ref: 'client'},
+    status: {
+        type: String,
+        required: true
+    },
+    produit: {type:mongoose.Schema.ObjectId, ref: 'produits'},
+    clients: {type:mongoose.Schema.ObjectId, ref: 'clients'}
 })
 
 module.exports = mongoose.model('commande', commandeSchema)
