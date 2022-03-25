@@ -15,7 +15,9 @@ const index = async (req, res) => {
 const store = async (req, res) => {
     //get body from http req 
     const { Name, prix, quantite, marque, categorie,vendeur} = req.body
-    console.log(req.body);
+    const images=req.file.path
+
+   // console.log(images);
     try {
         if (!Name || !prix || !quantite  || !marque ||!categorie || !vendeur)
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
@@ -27,10 +29,12 @@ const store = async (req, res) => {
                 quantite,
                 marque,
                 categorie,
-                vendeur
+                vendeur,
+                images:images
             })
               
             res.status(200).json({newproduit})
+        //res.status(200).json({images})
         } catch (err) {
             res.status(400).json({ error: err.message }) //req error
         }
