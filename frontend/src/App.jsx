@@ -1,9 +1,9 @@
-
+import ClientRoutes from './Routes/Clients/routes'
 function App() {
 
   return (
     <div className="App">
-      <h2>seeer 3alaah</h2>
+      <ClientRoutes />
     </div>
   )
 }
