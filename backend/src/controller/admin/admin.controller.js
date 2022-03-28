@@ -103,6 +103,7 @@ const updatePassword = async (req,res) =>{
     }
     
 }
+
 module.exports = {
     create,
     fetch,

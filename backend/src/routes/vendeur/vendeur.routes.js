@@ -19,14 +19,14 @@ router.post('/vendeur/loginvendeur', vendeur.loginvendeur);
 
 
 //image
-router.get('/image',  image.index);
-router.post('/image/store',uploadimage,image.store);
-router.delete('/image/delete', image.deleteimage);
-router.put('/image/update', image.update);
+// router.get('/image',  image.index);
+// router.post('/image/store',uploadimage,image.store);
+// router.delete('/image/delete', image.deleteimage);
+// router.put('/image/update', image.update);
 
 //produit
 router.get('/produit', produit.index);
-router.post('/produit/store', produit.store);
+router.post('/produit/store',uploadimage, produit.store);
 router.delete('/produit/delete', produit.deleteproduit);
 router.put('/produit/update', produit.update);
 
