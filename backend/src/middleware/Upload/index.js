@@ -43,7 +43,8 @@ const uploadfile = multer({
 
 const uploadpdf = uploadfile.single('file')
 const uploadimage = upload.single('images')
-// const uploadimage = upload.fields([{'images'}])
+//const uploadimage = upload.fields([{ name: 'images', maxCount: 10 }, { name: 'images', maxCount: 10 }])
+
 module.exports = {
   uploadpdf,
   uploadimage
