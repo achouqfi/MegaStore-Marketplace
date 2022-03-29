@@ -21,7 +21,7 @@ const login = async (req, res) => {
             if(!user){
                 res.status(400).json({message:"user not found"})
             }else{
-                const role = 'superAdmin'
+            const role = 'superAdmin'
             console.log(user);
 
             // Create token
