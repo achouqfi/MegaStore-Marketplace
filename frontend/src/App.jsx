@@ -1,5 +1,5 @@
 import ClientRoutes from './Routes/Clients/routes'
-import VendeurRoutes from './Routes/Vendeurs/routes'
+import VendeurRoutes from './Routes/Vendeur/routes'
 function App() {
 
   return (

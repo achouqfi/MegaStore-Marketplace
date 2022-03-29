@@ -5,15 +5,16 @@ import Home from '../../Screens/Client/Home'
 import NewsLetters from '../../Components/Client/NewsLetter'
 import AuthClient from '../../Screens/Client/AuthClient'
 export default function routes() {
+  let path = window.location.pathname
   return (
     <BrowserRouter>
-      <NavBar />
+      { path == '/login' || path == '/inscription' ||  path == '/' && <NavBar /> }
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<AuthClient />} />
         <Route path="/inscription" element={<AuthClient />} />
       </Routes>
-      <NewsLetters />
+      { path == '/login' || path == '/inscription' ||  path == '/'  && <NewsLetters /> }
     </BrowserRouter>
   );
 }

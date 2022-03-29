@@ -37,6 +37,8 @@ const store = async (req, res) => {
     const { email, firstName, lastName ,password, phone ,typecompte} = req.body
     const doc=req.file.path
    
+      console.log(doc);
+    
     try {
         if (!email || !firstName || !lastName  || !password || !doc || !phone || !typecompte )
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation

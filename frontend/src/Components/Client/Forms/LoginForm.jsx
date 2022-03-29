@@ -19,8 +19,8 @@ export default function LoginForm() {
             }}
             validationSchema={ClientSchema}
             onSubmit={async (values) => {
-                // console.log(values);
-                login(values, 'clients');
+                console.log(values);
+                // login(values, 'clients');
             }}
         >
             {({ errors, touched }) => (

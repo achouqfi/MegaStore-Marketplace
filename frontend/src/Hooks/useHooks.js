@@ -8,6 +8,7 @@ export const login = async (values, role) => {
 };
 
 export const create = async (values, role) => {
+    // console.log(values, role, 'vendeurs')
     axios
         .post(`http://localhost:4000/api/${role}/store`, values)
         .then(res => console.log(res))
@@ -17,6 +18,13 @@ export const create = async (values, role) => {
 export const drop = async (id, role) => {
     axios
         .delete(`http://localhost:4000/api/${role}/${id}`)
+        .then(res => console.log(res))
+        .catch(err=>console.log(err))
+};
+
+export const update = async (id, role) => {
+    axios
+        .update(`http://localhost:4000/api/${role}/${id}`)
         .then(res => console.log(res))
         .catch(err=>console.log(err))
 };
