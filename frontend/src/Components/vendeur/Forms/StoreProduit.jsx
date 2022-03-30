@@ -4,17 +4,14 @@ import * as Yup from "yup";
 // import Error from '../Errors/index'
 import { create } from "../../../Hooks/useHooks";
 import {useState} from 'react'
-import ModePaiement from "../../../Components/vendeur/Forms/Modepaiement";
 
-const VendeurSchema = Yup.object().shape({
-    email: Yup.string().email("Invalid email address").required("Required"),
-    password: Yup.string().min(2, "Too Short!").required("Required"),
-    firstName: Yup.string().required("Required"),
-    lastName: Yup.string().required("Required"),
-    phone: Yup.string().required("Required"),
-    file: Yup.string().required("Required"),
-    typecompte: Yup.string().required("Required"),
-
+const ProduitSchema = Yup.object().shape({
+    name: Yup.string().required("Required"),
+    prix: Yup.string().required("Required"),
+    quantite: Yup.string().required("Required"),
+    marque: Yup.string().required("Required"),
+    image: Yup.string().required("Required"),
+    categorie: Yup.string().required("Required"),
 });
 
 export default function InscriptionForm() {
@@ -24,129 +21,119 @@ export default function InscriptionForm() {
        
         <Formik
             initialValues={{
-                email: "",
-                password: "",
-                firstName: "",
-                lastName: "",
-                phone: "",
-                file:"",
-                typecompte:""
-               
+                name: "",
+                prix: "",
+                quantite: "",
+                marque: "",
+                image: "",
+                categorie:""
             }}
-        
-           
-            validationSchema={VendeurSchema}
-            
+            validationSchema={ProduitSchema}
             onSubmit={async (values) => {
-                //console.log(values.typecompte)
-                create(values,'vendeurs')
-
-                }
-                
-            }
+                 create(values,'produits')
+            }}
         >
-  
-            {({ errors, touched, values }) => (
+            
+            {({ errors, touched }) => (
                 <Form>
                     <h1 className="font-bold text-blue-600 text-xl">
-                        Bienvenue dans l'espace vendeur Incrivez-vous maintenant    
+                        Bienvenue dans l'espace Store Produit    
                     </h1>
                     {/* {<Error error={errors} />} */}
                     <div className="mt-4">
                         <label
-                            htmlFor="email"
+                            htmlFor="name"
                             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
-                            Email
+                            Name
                         </label>
                         <Field
-                            type="email"
-                            id="email"
+                            type="text"
+                            id="name"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            name="email"
+                            name="name"
                         />
-                        {errors.email && touched.email ? (
+                        {errors.name && touched.name ? (
                             <div className="text-red-500 font-semibold dark:text-red-400">
-                                {errors.email}
+                                {errors.name}
                             </div>
                         ) : null}
                     </div>
                     <div className="mt-4">
                         <label
-                            htmlFor="email"
+                            htmlFor="prix"
                             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
-                            FirstName
+                            Prix
                         </label>
                         <Field
                             type="text"
-                            id="firstName"
+                            id="prix"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            name="firstName"
+                            name="prix"
                         />
-                        {errors.firstName && touched.firstName ? (
+                        {errors.prix && touched.prix ? (
                             <div className="text-red-500 font-semibold dark:text-red-400">
-                                {errors.firstName}
-                            </div>
-                        ) : null}
-                    </div>
-                   
-                    <div className="mt-4">
-                        <label
-                            htmlFor="email"
-                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                        >
-                            LastName
-                        </label>
-                        <Field
-                            type="text"
-                            id="lastName"
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            name="lastName"
-                        />
-                        {errors.lastName && touched.lastName ? (
-                            <div className="text-red-500 font-semibold dark:text-red-400">
-                                {errors.lastName}
+                                {errors.prix}
                             </div>
                         ) : null}
                     </div>
                     <div className="mt-4">
                         <label
-                            htmlFor="email"
+                            htmlFor="quantite"
                             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
-                            Phone
+                            Quantite
+                        </label>
+                        <Field
+                            type="number"
+                            id="quantite"
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            name="quantite"
+                        />
+                        {errors.quantite && touched.quantite ? (
+                            <div className="text-red-500 font-semibold dark:text-red-400">
+                                {errors.quantite}
+                            </div>
+                        ) : null}
+                    </div>
+                    <div className="mt-4">
+                        <label
+                            htmlFor="marque"
+                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >
+                            Marque
                         </label>
                         <Field
                             type="text"
-                            id="phone"
+                            id="marque"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            name="phone"
+                            name="marque"
                         />
-                        {errors.phone && touched.phone ? (
+                        {errors.marque && touched.marque ? (
                             <div className="text-red-500 font-semibold dark:text-red-400">
-                                {errors.phone}
+                                {errors.marque}
                             </div>
                         ) : null}
                     </div>
 
                     <div className="mt-4">
                         <label
-                            htmlFor="email"
+                            htmlFor="image"
                             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
-                            Document
+                            Image
                         </label>
                         <input
                             type="file"
-                            id="file"
+                            id="image"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            name="file"
+                            name="image"
                             multiple
                         />
-                        {errors.file && touched.file ? (
+                        {errors.image && touched.image ? (
                             <div className="text-red-500 font-semibold dark:text-red-400">
-                                {errors.file}
+                                {errors.image}
                             </div>
                         ) : null}
                     </div>
@@ -155,90 +142,110 @@ export default function InscriptionForm() {
                             htmlFor="password"
                             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
-                            Password
+                            Categorie
                         </label>
-                        <Field
-                            type="password"
-                            id="password"
+                        {/* <select
+                            // type="select"
+                            id="categorie"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            name="password"
-                        />
-                        {errors.password && touched.password ? (
+                            name="categorie"
+                        /> */}
+
+                    <Field
+                            id="categorie"
+                            name="categorie"
+                            as="select"
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        >
+                            <option value="" label="Select a categorie">
+                            Select a categorie{" "}
+                            </option>
+                            <option value="cat1" label="cat1">
+                            {" "}
+                            cat1
+                            </option>
+                            <option value="cat2" label="cat2">
+                            cat2
+                            </option>
+                            <option value="cat3" label="cat3">
+                            cat3
+                            </option>
+                        </Field>
+                        {errors.categorie && touched.categorie ? (
                             <div className="text-red-500 font-semibold dark:text-red-400">
-                                {errors.password}
+                                {errors.categorie}
                             </div>
                         ) : null}
                     </div>
 
-                    <div className="mt-4">
+                    {/* <div className="mt-4">
                         <label
                             htmlFor="email"
                             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
                             TypeCompte
                         </label>
-
-                        <Field
-                            id="typecompte"
-                            name="typecompte"
-                            as="select"
+                        <label>Starter</label>
+                        <input
+                            type="radio"
+                            id="expret"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                       
-                        >
-                            <option value=""  label="Select a typecompte">
-                            Select a typecompte
-                            </option>
-                            <option value="Starter" label="Starter">
-                            {" "}
-                            Starter
-                            </option>
-                            <option value="Pro" label="Pro">
-                            Pro
-                            </option>
-                            <option value="Expert" label="Expert">
-                            Expert
-                            </option>
-                        </Field>
+                            name="radio"
+                            checked
+                        />
 
-                        {errors.typecompte && touched.typecompte ? (
+                        <label>Pro</label>
+                        <input
+                            type="radio"
+                            id="expret"
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            name="radio"
+                        />
+
+                        <label>Expert</label>
+                        <input
+                            type="radio"
+                            id="expret"
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            name="radio"
+                        />
+
+                        <label
+                            htmlFor="email"
+                            className="paiement invisible  block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                            
+                        >
+                            Mode de Paiement
+                        </label>
+                    <label className='invisible'>Virement Bancaire</label>
+                        <input
+                            type="radio"
+                            id="virement"
+                            className="paiement invisible  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            name="paiement"
+                        />
+
+                        <label className='invisible '>Paiement par Carte</label>
+                        <input
+                            type="radio"
+                            id="carte"
+                            className="paiement invisible  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            name="paiement"
+                        />
+
+                        {errors.file && touched.file ? (
                             <div className="text-red-500 font-semibold dark:text-red-400">
-                                {errors.typecompte}
+                                {errors.file}
                             </div>
                         ) : null}
-                    
-                      
-                    { values.typecompte == 'Pro'  ?(
-                   <>
-                        <h1>Prix de compte :3000 dh</h1>  
-                        <ModePaiement/>
-                   </>
-
-                     ):values.typecompte == 'Expert' ? (
-                   <>
-                      <h1>Prix de compte :5000 dh</h1>  
-                      <ModePaiement/>   
-                   </>
-                ):null}
-
-                  
-            { values.modepaiement == 'Paiement par Carte' ?(
-                   <>
-                      tes1      
-                   </>
-
-            ):values.modepaiement == 'Virement Bancaire' ? (
-                   <>
-                      tes2      
-                   </>
-            ):null}
-                    </div>
+                    </div> */}
 
                     <div className="mt-8 flex justify-between">
                         <button
                             type="submit"
                             className="bg-gradient-to-r from-red-600 to-pink-500 rounded-full py-2 px-5 text-gray-50 uppercase ml-4 md:self-start"
                         >
-                            Sign in
+                            Save
                         </button>
                     </div>
                 </Form>
