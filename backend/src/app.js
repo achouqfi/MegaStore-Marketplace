@@ -42,7 +42,19 @@ app.use('/api/admin', AdminRoutes)
 
 // Vendeur api
 const vendeurRoutes = require('./routes/vendeur/vendeur.routes')
-app.use('/api/vendeur', vendeurRoutes)
+app.use('/api/vendeurs', vendeurRoutes)
+
+// Categorie api
+const categorieRoutes = require('./routes/vendeur/categorie.routes')
+app.use('/api/categories', categorieRoutes)
+
+// Produit api
+const produitRoutes = require('./routes/vendeur/produit.routes')
+app.use('/api/produits', produitRoutes)
+
+// Typecompte api
+const typecompteRoutes = require('./routes/vendeur/typecompte.routes')
+app.use('/api/typecomptes', typecompteRoutes)
 
 //commande api 
 const commandeRoute = require('./routes/client/commade.routes')
