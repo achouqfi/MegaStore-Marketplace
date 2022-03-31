@@ -10,10 +10,8 @@ import './i18n'
 ReactDOM.render(
   <QueryClientProvider client={queryClient}>
     <React.StrictMode>
-      <Suspense fallback={(<div>Loading</div>)}>
-        <App />
-      </Suspense>
-    </React.StrictMode>,
+      <App />
+    </React.StrictMode>
   </QueryClientProvider>,
   document.getElementById('root')
 )

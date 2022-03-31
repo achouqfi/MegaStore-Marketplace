@@ -11,6 +11,7 @@ const ClientSchema = Yup.object().shape({
 });
 
 export default function LoginForm() {
+    let path = window.location.pathname;
     return (
         <Formik
             initialValues={{
@@ -19,14 +20,14 @@ export default function LoginForm() {
             }}
             validationSchema={ClientSchema}
             onSubmit={async (values) => {
-                console.log(values);
-                // login(values, 'clients');
+                {path == "/login" ? login(values, 'clients') : path == "/admin" ? login(values, 'admin') : null};
             }}
         >
             {({ errors, touched }) => (
                 <Form>
                     <h1 className="font-bold text-blue-600 text-xl">
-                        Bienvenue dans l'espace client authentifiez-vous
+                        {/* { path == "/login" ? "Bienvenue dans l'espace Client authentifiez-vous" : path == "/admin" ? "Bienvenue dans l'espace Admin authentifiez-vous" : null }  */}
+                        Bienvenue dans l'espace { path == "/login" ? "Client" : path == "/admin" ? "Admin" : null } authentifiez-vous
                     </h1>
                     {/* {<Error error={errors} />} */}
                     <div className="mt-4">
@@ -75,7 +76,7 @@ export default function LoginForm() {
                         >
                             Login
                         </button>
-                        <Link to="/inscription" className='text-blue-500 mt-1 underline pb-1'>Create account</Link>
+                        { path == "/login" ? <Link to="/inscription" className='text-blue-500 mt-1 underline pb-1'>Create account</Link> : null}
                     </div>
                 </Form>
             )}
