@@ -1,10 +1,11 @@
 import axios from "axios";
 
 export const login = async (values, role) => {
-    axios
+     axios
         .post(`http://localhost:4000/api/${role}/login`, values)
-        .then(res => console.log(res))
+        .then(localStorage.setItem('role',role))
         .catch(err=>console.log(err))
+    
 };
 
 export const create = async (values, role) => {

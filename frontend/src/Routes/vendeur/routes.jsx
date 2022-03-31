@@ -8,13 +8,13 @@ import AuthVendeur from '../../Screens/vendeur/AuthVendeur'
 export default function routes() {
   return (
     <BrowserRouter>
-      <NavBar />
+      {/* <NavBar /> */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="vendeur/login" element={<AuthVendeur />} />
         <Route path="vendeur/inscription" element={<AuthVendeur />} />
       </Routes>
-      <NewsLetters />
+      {/* <NewsLetters /> */}
     </BrowserRouter>
   );
 }
