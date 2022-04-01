@@ -42,7 +42,7 @@ const store = async (req, res) => {
 
 //delete produit
 const deleteproduit = async (req, res) => {
-    const { id } = req.body
+    const { id } = req.params
     try {
         await produits.findByIdAndDelete(id) //delete produit by id
         res.status(200).json({ message: "produit deleted successfully" })
@@ -54,7 +54,8 @@ const deleteproduit = async (req, res) => {
 //Update  produit
 const update = async (req, res) => {
     //get body from http req 
-    const {Name,prix,quantite,marque,categorie,id,vendeur} = req.body
+    const {Name,prix,quantite,marque,categorie,vendeur} = req.body
+    const id=req.params
     const record = { _id: id };
     //console.log(req.body);
     try {

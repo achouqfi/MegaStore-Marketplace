@@ -6,14 +6,16 @@ import { create } from "../../../Hooks/useHooks";
 import {useState} from 'react'
 import ModePaiement from "../../../Components/vendeur/Forms/Modepaiement";
 
+import { FilePond, registerPlugin } from 'react-filepond'
+
 const VendeurSchema = Yup.object().shape({
-    email: Yup.string().email("Invalid email address").required("Required"),
-    password: Yup.string().min(2, "Too Short!").required("Required"),
-    firstName: Yup.string().required("Required"),
-    lastName: Yup.string().required("Required"),
-    phone: Yup.string().required("Required"),
-    file: Yup.string().required("Required"),
-    typecompte: Yup.string().required("Required"),
+    // email: Yup.string().email("Invalid email address").required("Required"),
+    // password: Yup.string().min(2, "Too Short!").required("Required"),
+    // firstName: Yup.string().required("Required"),
+    // lastName: Yup.string().required("Required"),
+    // phone: Yup.string().required("Required"),
+    // file: Yup.string().required("Required"),
+    // typecompte: Yup.string().required("Required"),
 
 });
 
@@ -29,25 +31,26 @@ export default function InscriptionForm() {
                 firstName: "",
                 lastName: "",
                 phone: "",
-                file:"",
+                files:"",
                 typecompte:""
                
             }}
         
            
             validationSchema={VendeurSchema}
-            
+        
             onSubmit={async (values) => {
+                 console.log(values)
                 //console.log(values.typecompte)
-                create(values,'vendeurs')
+               // create(values,'vendeurs')
 
                 }
                 
             }
         >
   
-            {({ errors, touched, values }) => (
-                <Form>
+            {({ errors, touched, values ,setFieldValue ,files,setFiles }) => (
+                <Form enctype="multipart/form-data">
                     <h1 className="font-bold text-blue-600 text-xl">
                         Bienvenue dans l'espace vendeur Incrivez-vous maintenant    
                     </h1>
@@ -137,18 +140,23 @@ export default function InscriptionForm() {
                         >
                             Document
                         </label>
-                        <input
+                        {/* <input
                             type="file"
                             id="file"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             name="file"
-                            multiple
-                        />
-                        {errors.file && touched.file ? (
+                            onChange={(event) => {
+                                setFieldValue("file", event.currentTarget.files[0]);}}
+                            //multiple
+                        /> */}
+                           <FilePond
+                           
+                          />
+                        {/* {errors.file && touched.file ? (
                             <div className="text-red-500 font-semibold dark:text-red-400">
                                 {errors.file}
                             </div>
-                        ) : null}
+                        ) : null} */}
                     </div>
                     <div className="mt-4">
                         <label

@@ -6,6 +6,7 @@ import NewsLetters from '../../Components/Client/NewsLetter'
 import SideBar from "../../Components/vendeur/SideBar";
 import AuthVendeur from '../../Screens/vendeur/AuthVendeur'
 import Produit from '../../Screens/vendeur/Produit'
+import Dashboard from '../../Screens/vendeur/Dashboard'
 export default function routes() {
   return (
     <BrowserRouter>
@@ -15,6 +16,8 @@ export default function routes() {
         <Route path="vendeur/login" element={<AuthVendeur />} />
         <Route path="vendeur/inscription" element={<AuthVendeur />} />
         <Route path="vendeur/produit" element={<Produit />} />
+        <Route path="vendeur/dashboard" element={<Dashboard />} />
+        <Route path="vendeur/dashboard/produit" element={<Dashboard />} />
       </Routes>
       {/* <NewsLetters /> */}
     </BrowserRouter>
