@@ -6,7 +6,7 @@ function Count() {
 
         <div className='flex gap-x-11 w-full mt-5'>
 
-            <div className='w-1/3 bg-gray-50 h-24 text-center p-5 rounded-lg flex '>
+            <div className='w-1/3 bg-gray-50 h-24 text-center p-5 rounded-lg flex shadow-md	'>
                 
                 <div className='rounded-full w-14 bg-indigo-200 flex-start flex justify-center items-center'>
                     <div className='h-8 w-8'>
@@ -21,7 +21,7 @@ function Count() {
                 </div>
             </div>
 
-            <div className='w-1/3 bg-gray-50 h-24 text-center p-5 rounded-lg flex '>
+            <div className='w-1/3 bg-gray-50 h-24 text-center p-5 rounded-lg flex shadow-md	'>
                 
                 <div className='rounded-full w-14 bg-indigo-200 flex-start flex justify-center items-center'>
                     <div className='w-8 h-8 mt-2'>
@@ -39,7 +39,7 @@ function Count() {
                 </div>
             </div>
 
-            <div className='w-1/3 bg-gray-50 h-24 text-center p-5 rounded-lg flex '>
+            <div className='w-1/3 bg-gray-50 h-24 text-center p-5 rounded-lg flex shadow-md	'>
                 
                 <div className='rounded-full w-14 bg-indigo-200 flex-start flex justify-center items-center'>
                     <div className='w-8 h-8'>

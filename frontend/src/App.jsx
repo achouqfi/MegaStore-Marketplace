@@ -6,7 +6,7 @@ function App() {
     <div className="App">
       <ClientRoutes />
       <VendeurRoutes />
-      {/* <AdminRoutes/>  */}
+      <AdminRoutes/> 
     </div>
   )
 }
