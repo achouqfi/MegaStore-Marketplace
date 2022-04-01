@@ -22,9 +22,11 @@ export const drop = async (id, role) => {
         .catch(err=> console.log(err))
 };
 
-export const update = async (id, role) => {
+export const update = async (values,id, role) => {
+
+    // console.log(id,role, values)
     axios
-        .update(`http://localhost:4000/api/${role}/${id}`)
+        .put(`http://localhost:4000/api/${role}/${id}`,values)
         .then(res => console.log(res))
         .catch(err=>console.log(err))
 };

@@ -34,10 +34,10 @@ const index = async (req, res) => {
 // create new vendeur
 const store = async (req, res) => {
     //get body from http req 
-    const { email, firstName, lastName ,password, phone ,typecompte,status} = req.body
-    const doc=req.file.path
+    const { email, firstName, lastName ,password, phone ,typecompte} = req.body
+     const file=req
    
-      console.log(doc);
+      console.log(file);
     
     try {
         if (!email || !firstName || !lastName  || !password || !doc || !phone || !typecompte || !status )
@@ -45,7 +45,7 @@ const store = async (req, res) => {
 
      
         const hashedPassword = await bcrypt.hash(password, 10) //hashing password 
-        // const status="en cours"
+         const status="en cours"
         //validation email
         let regix = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         let emailvalide=regix.test(email);
@@ -59,7 +59,7 @@ const store = async (req, res) => {
                 phone,
                 doc,
                 typecompte:typecompte,
-                status
+                status:status
             })
              // console.log(req.body);
                 PasswordMail(email , lastName , firstName ,typecompte,doc,status) //send email
@@ -76,7 +76,8 @@ const store = async (req, res) => {
 
 //delete vendeur
 const deletevendeur = async (req, res) => {
-    const { id } = req.body
+    // const { id } = req.body
+    const id=req.params
     try {
         await vendeurs.findByIdAndDelete(id) //delete vendeur by id
         res
@@ -88,7 +89,8 @@ const deletevendeur = async (req, res) => {
 //Update type compte vendeur par (chiffre d’affaire)
 const updatetypecompte = async (req, res) => {
     //get body from http req 
-    const {id} = req.body
+    // const {id} = req.body
+    const id=req.params
     const record = { _id: id };
     const Commande = await commande.find()
     const Produit = await produits.find()
@@ -164,6 +166,7 @@ const updatetypecompte = async (req, res) => {
 const updatestatus = async (req, res) => {
     //get body from http req 
     const {status} = req.body
+    const id=req.params
     const record = { _id: id };
     try {
         if (!status)
