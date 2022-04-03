@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-// import Error from '../Errors/index'
+import Error from '../Errors/index'
 import { Link, Navigate } from 'react-router-dom';
 import { login } from "../../../Hooks/useHooks";
+import { useNavigate } from "react-router-dom";
+import {  useMutation } from "react-query";
+import axios from "axios";
+import { useCookies } from 'react-cookie';
 
 const ClientSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email address").required("Required"),
@@ -11,7 +15,26 @@ const ClientSchema = Yup.object().shape({
 });
 
 export default function LoginForm() {
-    let path = window.location.pathname;
+    const [cookies, setCookie, removeCookie] = useCookies();
+    const navigate = useNavigate();
+    const [error, setError] = useState("");
+
+
+    const loginMutation = useMutation(
+        (values) => 
+        // login(values, 'clients')
+        axios 
+            .post("http://localhost:4000/api/clients/login", values)
+            .then(res=>setCookie('role', res.data)),
+        {
+          onSuccess: () => {
+            navigate("/");
+          },
+          onError: () => {
+            setError("wrong creds");
+          },
+        }
+      )
     return (
         <Formik
             initialValues={{
@@ -20,7 +43,7 @@ export default function LoginForm() {
             }}
             validationSchema={ClientSchema}
             onSubmit={async (values) => {
-                {path == "/login" ? login(values, 'clients') : path == "/admin" ? login(values, 'admin') : null};
+                loginMutation.mutate(values)
             }}
         >
             {({ errors, touched }) => (
@@ -68,7 +91,7 @@ export default function LoginForm() {
                             </div>
                         ) : null}
                     </div>
-
+                    {loginMutation.isError && <Error error={error} />}
                     <div className="mt-8 flex justify-between">
                         <button
                             type="submit"
