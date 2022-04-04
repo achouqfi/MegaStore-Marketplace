@@ -13,16 +13,16 @@ import {  useMutation } from "react-query";
 
 export default function NavBar() {
   const { dataProduct, setDataProduct } = useContext(CardContext)
-  const [cookies, setCookie, removeCookie] = useCookies();
+  // const [cookies, setCookie, removeCookie] = useCookies();
   const navigate = useNavigate();
 
-  const logoutMutation = useMutation(
-    () => removeCookie(),{
-      onSuccess: () => {
-        navigate("/");
-      }
-    }
-  )
+  // const logoutMutation = useMutation(
+  //   () => removeCookie(),{
+  //     onSuccess: () => {
+  //       navigate("/");
+  //     }
+  //   }
+  // )
 
   const { t } = useTranslation();
   function handleClick(lang) {
@@ -47,15 +47,15 @@ export default function NavBar() {
           </svg>
           {dataProduct}
         </a>
-        { cookies.role.role === 'client' ?(
+        {/* { cookies.role.role === 'client' ?( */}
           <Link to="/login" className="bg-gradient-to-r from-red-600 to-pink-500 rounded-full py-3 px-6 text-gray-50 uppercase ml-4 md:self-start ">
             {t('Navbar.5')}
           </Link>
-        // ): cookies.role.role === 'client' ? (
-        //   <button onClick={logoutMutation.mutate()} className="bg-gradient-to-r from-red-700 to-pink-700 rounded-full py-3 px-6 text-gray-50 uppercase ml-3 md:self-start ">
+        {/* // ): cookies.role.role === 'client' ? ( */}
+        {/* //   <button onClick={logoutMutation.mutate()} className="bg-gradient-to-r from-red-700 to-pink-700 rounded-full py-3 px-6 text-gray-50 uppercase ml-3 md:self-start ">
         //     {t('Navbar.7')}
-        //   </button>
-        ):null}
+        //   </button> */}
+        {/* ):null} */}
 
           <button className="ml-6" onClick={()=>handleClick('en')} >
             <img src={Uk} alt="fr" height={20} width={20} />
