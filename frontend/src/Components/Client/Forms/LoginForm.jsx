@@ -18,20 +18,24 @@ export default function LoginForm() {
     const [cookies, setCookie, removeCookie] = useCookies();
     const navigate = useNavigate();
     const [error, setError] = useState("");
-
+    let path = window.location.pathname
+    let role;
+    {
+        path === "/login" ? role="clients" : path === "/admin" ? role="admin" : null;
+    }
 
     const loginMutation = useMutation(
         (values) => 
-        // login(values, 'clients')
         axios 
-            .post("http://localhost:4000/api/clients/login", values)
-            .then(res=>setCookie('role', res.data)),
+            .post( `http://localhost:4000/api/${role}/login`, values)
+            .then(res=>setCookie(role, res.data)),
         {
+            
           onSuccess: () => {
-            navigate("/");
+            { path === '/admin'? navigate("/adminDash"): path === 'login'? navigate("/"): null }
           },
           onError: () => {
-            setError("wrong creds");
+            setError("wrong infos");
           },
         }
       )
@@ -43,7 +47,7 @@ export default function LoginForm() {
             }}
             validationSchema={ClientSchema}
             onSubmit={async (values) => {
-                loginMutation.mutate(values)
+                { path==='/admin' ? loginMutation.mutate(values) : loginMutation.mutate(values, 'clients') }
             }}
         >
             {({ errors, touched }) => (
