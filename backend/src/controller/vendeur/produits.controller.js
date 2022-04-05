@@ -11,6 +11,32 @@ const index = async (req, res) => {
     }
 }
 
+
+// count all produit 
+const countproduit = async (req, res) => {
+    id=req.params
+    const idvendeur1=JSON.stringify(id.id).replace(/["]+/g, '')
+    // console.log("2",idvendeur1);
+    try {
+        let count=0;
+        const produit = await produits.find().populate("vendeur")
+
+        produit.forEach(element => {
+            const idvendeur=JSON.stringify(element.vendeur._id).replace(/["]+/g, '')
+          
+              
+            if(idvendeur == idvendeur1){
+                count++;
+            }
+        });
+        res.status(200).json(count)
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+}
+
+
+
 //create new produit
 const store = async (req, res) => {
     //get body from http req 
@@ -84,5 +110,7 @@ module.exports = {
     index,
     store,
     deleteproduit,
-    update  
+    update,
+    countproduit
+
 };

@@ -1,4 +1,39 @@
+import { useState } from "react";
+import { useQuery } from "react-query";
+// import ConfirmDelete from "../confirmdelete/index.jsx";
+// import EditProduit from "../editproduit";
+// import Modal from "../Modals/index.jsx";
+import axios from "axios";
+import { useCookies } from 'react-cookie';
+
 function Count() {
+
+    const [cookies, setCookie, removeCookie] = useCookies();
+   
+
+    // console.log(cookies);
+    //count categorie
+    const query = useQuery("categories", async () => {
+        const { data } = await axios.get("http://localhost:4000/api/categories/count");
+        return data;
+      });
+    
+    //count produit
+     
+    const query1 = useQuery("produits", async () => {
+        const { data } = await axios.get("http://localhost:4000/api/produits/count/"+cookies.id);
+        return data;
+      });
+
+    
+    //count commande
+    
+    const query2 = useQuery("commande", async () => {
+        const { data } = await axios.get("http://localhost:4000/api/commande/count/"+cookies.id);
+        return data;
+      });
+
+
   return (
     <div className='p-10 w-full'>
 
@@ -16,26 +51,12 @@ function Count() {
                     </div>
                 </div>
                 <div className='flex flex-col'>
-                    <span className='flex items-center ml-2 font-bold text-2xl'>13</span>
+                    <span className='flex items-center ml-2 font-bold text-2xl'>{query2.data}</span>
                     <span className='flex items-center ml-2'>Commandes</span>
                 </div>
             </div>
 
 
-            <div className='w-1/3 bg-gray-50 h-24 text-center p-5 rounded-lg flex '>
-                
-                <div className='rounded-full w-14 bg-indigo-200 flex-start flex justify-center items-center'>
-                    <div className='h-8 w-8'>
-                        <svg className="w-8 h-8 text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
-                            <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                        </svg>
-                    </div>
-                </div>
-                <div className='flex flex-col'>
-                    <span className='flex items-center ml-2 font-bold text-2xl'>13</span>
-                    <span className='flex items-center ml-2'>Commandes</span>
-                </div>
-            </div>
 
             <div className='w-1/3 bg-gray-50 h-24 text-center p-5 rounded-lg flex '>
                 
@@ -50,7 +71,7 @@ function Count() {
                     </div>
                 </div>
                 <div className='flex flex-col'>
-                    <span className='flex items-center ml-2 font-bold text-2xl'>29</span>
+                    <span className='flex items-center ml-2 font-bold text-2xl'>{query1.data}</span>
                     <span className='flex items-center ml-2'>Produits</span>
                 </div>
             </div>
@@ -65,7 +86,7 @@ function Count() {
                     </div>
                 </div>
                 <div className='flex flex-col'>
-                    <span className='flex items-center ml-2 font-bold text-2xl'>13</span>
+                    <span className='flex items-center ml-2 font-bold text-2xl'>{query.data}</span>
                     <span className='flex items-center ml-2'>Categories</span>
                 </div>
             </div>

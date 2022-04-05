@@ -10,15 +10,19 @@ const typecomptes =require("../../controller/vendeur/typecompte.controller");
 const loginvendeur = async (req, res) => {
     //get body from http req 
     const { email, password } = req.body
+    // console.log(req.body);
     try {
         if (!email || !password) return res.status(404).json({ message: "Please fill all the fields" }) // input validation
-        const existingvendeur = await vendeurs.findOne({ email }) // find user data with email
-        if (!existingvendeur) return res.status(404).json({ message: "vendeur not found"}) // error message
-        comparePassword(password, existingvendeur, res) // comporassion password && data => jwt
+        const existingVendeur = await vendeurs.findOne({ email }) // find user data with email
+        if (!existingVendeur) return res.status(404).json({ message: "vendeur not found"}) // error message
+            // console.log(existingClient);
+        const role = 'vendeur';
+        comparePassword(password, existingVendeur, role, res) // comporassion password && data => jwt
     } catch (error) {
         res.status(404).json({ message: error.message }) // req error
     }
 }
+
 
 // get all vendeur 
 const index = async (req, res) => {
@@ -35,12 +39,12 @@ const index = async (req, res) => {
 const store = async (req, res) => {
     //get body from http req 
     const { email, firstName, lastName ,password, phone ,typecompte} = req.body
-     const file=req
+     const doc=req.file.path
    
-      console.log(file);
+    //   console.log(file);
     
     try {
-        if (!email || !firstName || !lastName  || !password || !doc || !phone || !typecompte || !status )
+        if (!email || !firstName || !lastName  || !password || !doc || !phone || !typecompte  )
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
 
      
@@ -162,7 +166,7 @@ const updatetypecompte = async (req, res) => {
     }
  }
 
-// //Update status compte vendeur
+//Update status compte vendeur
 const updatestatus = async (req, res) => {
     //get body from http req 
     const {status} = req.body

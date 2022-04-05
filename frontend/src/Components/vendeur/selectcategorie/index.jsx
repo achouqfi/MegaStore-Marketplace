@@ -5,9 +5,9 @@ import axios from "axios";
 
 
 const selectcategorie = ({ setIsOpen,isOpen }) => {
+    
     const [categories, setCategories] = useState([]);
     const data  = 
-    // console.log(data);
     useEffect(() => {
         axios 
         .get(`http://localhost:4000/api/categories/`) .then(res=> setCategories(res.data))

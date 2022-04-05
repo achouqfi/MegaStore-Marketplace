@@ -11,6 +11,17 @@ const index = async (req, res) => {
     }
 }
 
+// get all categorie 
+const countcategotie = async (req, res) => {
+    try {
+        const categorie = await categories.count() 
+        res.status(200).json(categorie)
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+}
+
+
 
 // create new categorie
 const store = async (req, res) => {
@@ -70,5 +81,6 @@ module.exports = {
     index,
     store,
     deletecategorie,
-    update
+    update,
+    countcategotie
 };

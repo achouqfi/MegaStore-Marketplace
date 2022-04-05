@@ -5,11 +5,16 @@ const router = express.Router();
 const {
     index,
     store,
-    updateStatus
+    updateStatus,
+    countcommande,
+    commandevendeur
 } = require('../../controller/client/commande.contoller')
 
 router.get('/', index) 
 router.post('/store', store)
 router.put('/:id', updateStatus)
+router.get('/count/:id', countcommande);
+router.get('/vendeur/:id', commandevendeur);
+
 
 module.exports = router;

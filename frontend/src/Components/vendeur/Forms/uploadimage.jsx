@@ -22,8 +22,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      // Set initial files, type 'local' means this is a file
-      // that has already been uploaded to the server (see docs)
+     
       files: [
         {
           source: "index.html",
@@ -49,10 +48,10 @@ class App extends Component {
           allowReorder={true}
           maxFiles={3}
           server="/api"
-          name="files" {/* sets the file input name, it's filepond by default */}
+          name="files"
           oninit={() => this.handleInit()}
           onupdatefiles={fileItems => {
-            // Set currently active file objects to this.state
+          
             this.setState({
               files: fileItems.map(fileItem => fileItem.file)
             });

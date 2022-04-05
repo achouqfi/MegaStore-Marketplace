@@ -10,11 +10,11 @@ function App() {
 
   return (
     <div className="App">
-      <CardContext.Provider value={{ dataProduct, setDataProduct }} >
-        <ClientRoutes />
-        {/* <VendeurRoutes />*/}
-        <AdminRoutes/> 
-      </CardContext.Provider>
+      {/* <CardContext.Provider value={{ dataProduct, setDataProduct }} > */}
+        {/* <ClientRoutes /> */}
+        <VendeurRoutes />
+        {/* <AdminRoutes/> 
+      </CardContext.Provider> */}
     </div>
   )
 }

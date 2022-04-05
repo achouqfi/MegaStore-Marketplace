@@ -17,6 +17,7 @@ const comparePassword = async (password, user,role ,res) => {
                     return res.status(200).json({
                         token: token,
                         email: user.email,
+                        id:user._id,
                         role:role,
                     })
                 })
