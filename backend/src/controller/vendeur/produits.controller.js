@@ -43,7 +43,7 @@ const store = async (req, res) => {
     const { Name, prix, quantite, marque, categorie,vendeur} = req.body
    // const images=req.file.path
 
-   console.log(req.body);
+   //console.log(req.body);
     try {
         if (!Name || !prix || !quantite  || !marque ||!categorie || !vendeur)
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation

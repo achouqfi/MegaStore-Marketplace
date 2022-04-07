@@ -41,7 +41,7 @@ const store = async (req, res) => {
     const { email, firstName, lastName ,password, phone ,typecompte} = req.body
     //  const doc=req.file.path
    
-     console.log(req.body);
+     //console.log(req.body);
     
     try {
         if (!email || !firstName || !lastName  || !password || !phone || !typecompte  )
