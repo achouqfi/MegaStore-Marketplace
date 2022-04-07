@@ -10,6 +10,7 @@ export const login = async (values, role) => {
 };
 
 export const create = async (values, role) => {
+    // console.log(values,role);
     axios
         .post(`http://localhost:4000/api/${role}/store`, values)
         .then(res => console.log(res))

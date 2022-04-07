@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState ,useEffect } from "react";
 import { useQuery } from "react-query";
  import ConfirmDelete from "../confirmdelete/index.jsx";
  import EditProduit from "../editproduit";
@@ -11,10 +11,13 @@ const tableproduits = () => {
 // const [dataproduit, setdataProdui] = useState("");
 // console.log(produitId);
 
-  const query = useQuery("produits", async () => {
-    const { data } = await axios.get("http://localhost:4000/api/produits/");
-    return data;
-  });
+ 
+const [produits, setproduits] = useState([]);
+const data  = 
+useEffect(() => {
+    axios 
+    .get(`http://localhost:4000/api/produits/`) .then(res=> setproduits(res.data))
+}, []);
 
   return (
       
@@ -75,8 +78,8 @@ const tableproduits = () => {
               </tr>
             </thead>
             <tbody>
-              {query &&
-                query.data?.map((produit, index) => (
+              
+              {produits.map((produit, index) => (
                   <tr
                     key={index}
                     className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
