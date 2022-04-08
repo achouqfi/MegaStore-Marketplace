@@ -20,6 +20,8 @@ ChartJS.register(
 
 function Chart() {
 
+  
+
   const options = {
     responsive: true,
     plugins: {

@@ -1,5 +1,5 @@
 
-const categorie = require("../../controller/vendeur/categorie.controller")
+const categorie = require("../../controller/vendeur/categorie.controller");
 const express = require("express")
 const router = express.Router();
 
@@ -8,8 +8,8 @@ const router = express.Router();
 router.get('/', categorie.index);
 router.get('/count', categorie.countcategotie);
 router.post('/store', categorie.store);
-router.delete('/:id', categorie.deletecategorie);
-router.put('/:id', categorie.update);
+router.delete('/:_id', categorie.deletecategorie);
+router.put('/:_id', categorie.update);
 
 
 

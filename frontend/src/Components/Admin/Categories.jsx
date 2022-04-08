@@ -14,6 +14,8 @@ function Categories() {
         <Commandes/> */}
         <h2 className='font-bold text-2xl underline'>Categories</h2>
         <Table/>
+        <h2 className='font-bold text-2xl underline mt-5 mb-2'>Commandes</h2>
+        <Commandes/>
 
       </div>
 
