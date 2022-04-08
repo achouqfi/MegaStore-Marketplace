@@ -1,14 +1,14 @@
 import AdminRoutes from './Routes/Admin/Admin.routes'
 import ClientRoutes from './Routes/Clients/routes'
 import VendeurRoutes from './Routes/Vendeur/routes'
-import LoginForm from './Components/SuperAdmin/LoginForm'
+import SuperadmineRoutes from './Routes/superAdmin/routes'
 function App() {
   return (
     <div className="App">
       <ClientRoutes />
       {/* <VendeurRoutes /> */}
       {/* <AdminRoutes/> */}
-      <LoginForm />
+      <SuperadmineRoutes/>
     </div>
   )
 }

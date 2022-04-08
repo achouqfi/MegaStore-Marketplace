@@ -1,6 +1,8 @@
 import * as Yup from "yup";
 import { Field, Form, Formik } from "formik";
 import {login} from "../../Hooks/useHooks"
+import {Navigate, useNavigate } from "react-router-dom"
+
 
 const SuperAdminSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email address").required("Required"),
@@ -9,6 +11,8 @@ const SuperAdminSchema = Yup.object().shape({
 
   const LoginForm=()=> {
     let role = "superAdmin"
+    let destination = "inscription"
+
 
   return (
       <Formik
@@ -19,7 +23,7 @@ const SuperAdminSchema = Yup.object().shape({
           
           validationSchema={SuperAdminSchema}
           onSubmit={async (values,) => {
-              login(values,role)
+              login(values,role,destination)
           }}
       >
           {({ errors, touched }) => (

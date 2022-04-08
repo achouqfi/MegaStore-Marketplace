@@ -1,10 +1,20 @@
 import axios from "axios";
+import Cookies from 'universal-cookie';
+import {Navigate} from 'react-router-dom';
+const cookies = new Cookies();
 
-export const login = async (values, role) => {
+
+export const login = async (values, role,destination) => {
      axios
         .post(`http://localhost:4000/api/${role}/login`, values)
-        .then(localStorage.setItem('role',role))
+        .then(
+            res=>cookies.set('data',JSON.stringify(res.data))
+            )
+
+        .then(window.location.href=`/${destination}`)
         .catch(err=>console.log(err))
+        
+        console.log(cookies.get('data').role);
     
 };
 
