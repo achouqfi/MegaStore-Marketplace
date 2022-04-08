@@ -41,22 +41,22 @@ const countproduit = async (req, res) => {
 const store = async (req, res) => {
     //get body from http req 
     const { Name, prix, quantite, marque, categorie,vendeur} = req.body
-    const images=req.file.path
+   // const images=req.file.path
 
-   // console.log(images);
+   //console.log(req.body);
     try {
         if (!Name || !prix || !quantite  || !marque ||!categorie || !vendeur)
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
-
             // add produit
             const newproduit = await produits.create({
+               
                 Name,
                 prix,
                 quantite,
                 marque,
                 categorie,
                 vendeur,
-                images:images
+                // images:images
             })
               
             res.status(200).json({newproduit})

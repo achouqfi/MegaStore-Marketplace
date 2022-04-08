@@ -6,13 +6,13 @@ import { create } from "../../../Hooks/useHooks";
 import { useQuery } from "react-query";
 import Selectcategorie  from "../selectcategorie/index.jsx";
 import axios from "axios";
-
+import { useCookies } from 'react-cookie';
 const ProduitSchema = Yup.object().shape({
-    name: Yup.string().required("Required"),
+    Name: Yup.string().required("Required"),
     prix: Yup.string().required("Required"),
     quantite: Yup.string().required("Required"),
     marque: Yup.string().required("Required"),
-    image: Yup.string().required("Required"),
+  //  image: Yup.string().required("Required"),
     categorie: Yup.string().required("Required"),
 });
 
@@ -25,16 +25,20 @@ const formaddproduit = ({ setIsOpen,isOpen }) => {
         .get(`http://localhost:4000/api/categories/`) .then(res=> setCategories(res.data))
     }, []);
 
+    const [cookies, setCookie, removeCookie] = useCookies();
+
   return (
 
     <Formik
+    
     initialValues={{
-        name: "",
+        Name: "",
         prix: "",
         quantite: "",
         marque: "",
-        image: "",
-        categorie:""
+        // image: "",
+        categorie:"",
+        vendeur:cookies.id,
     }}
     validationSchema={ProduitSchema}
     onSubmit={async (values) => {
@@ -57,13 +61,13 @@ const formaddproduit = ({ setIsOpen,isOpen }) => {
                 </label>
                 <Field
                     type="text"
-                    id="name"
+                    id="Name"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    name="name"
+                    name="Name"
                 />
-                {errors.name && touched.name ? (
+                {errors.Name && touched.Name ? (
                     <div className="text-red-500 font-semibold dark:text-red-400">
-                        {errors.name}
+                        {errors.Name}
                     </div>
                 ) : null}
             </div>

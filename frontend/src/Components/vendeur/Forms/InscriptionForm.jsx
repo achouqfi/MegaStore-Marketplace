@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { create } from "../../../Hooks/useHooks";
 import {useState} from 'react'
 import ModePaiement from "../../../Components/vendeur/Forms/Modepaiement";
-
+import Typecompte from "../../vendeur/selecttypecompte/index";
 import { FilePond, registerPlugin } from 'react-filepond'
 
 const VendeurSchema = Yup.object().shape({
@@ -31,7 +31,7 @@ export default function InscriptionForm() {
                 firstName: "",
                 lastName: "",
                 phone: "",
-                files:"",
+                // files:"",
                 typecompte:""
                
             }}
@@ -40,9 +40,7 @@ export default function InscriptionForm() {
             validationSchema={VendeurSchema}
         
             onSubmit={async (values) => {
-                 console.log(values)
-                //console.log(values.typecompte)
-               // create(values,'vendeurs')
+                create(values,'vendeurs')
 
                 }
                 
@@ -149,6 +147,7 @@ export default function InscriptionForm() {
                                 setFieldValue("file", event.currentTarget.files[0]);}}
                             //multiple
                         /> */}
+
                            <FilePond
                            
                           />
@@ -186,27 +185,7 @@ export default function InscriptionForm() {
                             TypeCompte
                         </label>
 
-                        <Field
-                            id="typecompte"
-                            name="typecompte"
-                            as="select"
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                       
-                        >
-                            <option value=""  label="Select a typecompte">
-                            Select a typecompte
-                            </option>
-                            <option value="Starter" label="Starter">
-                            {" "}
-                            Starter
-                            </option>
-                            <option value="Pro" label="Pro">
-                            Pro
-                            </option>
-                            <option value="Expert" label="Expert">
-                            Expert
-                            </option>
-                        </Field>
+                    <Typecompte/>
 
                         {errors.typecompte && touched.typecompte ? (
                             <div className="text-red-500 font-semibold dark:text-red-400">

@@ -39,12 +39,12 @@ const index = async (req, res) => {
 const store = async (req, res) => {
     //get body from http req 
     const { email, firstName, lastName ,password, phone ,typecompte} = req.body
-     const doc=req.file.path
+    //  const doc=req.file.path
    
-    //   console.log(file);
+     //console.log(req.body);
     
     try {
-        if (!email || !firstName || !lastName  || !password || !doc || !phone || !typecompte  )
+        if (!email || !firstName || !lastName  || !password || !phone || !typecompte  )
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
 
      
@@ -61,12 +61,12 @@ const store = async (req, res) => {
                 lastName,
                 password: hashedPassword,
                 phone,
-                doc,
+                // doc,
                 typecompte:typecompte,
                 status:status
             })
              // console.log(req.body);
-                PasswordMail(email , lastName , firstName ,typecompte,doc,status) //send email
+               // PasswordMail(email , lastName , firstName ,typecompte,doc,status) //send email
                 res.status(200).json({ newVendeur })
 
         }else{
