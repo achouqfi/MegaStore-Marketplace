@@ -22,7 +22,7 @@ const AddCategory = ({ setIsOpen,isOpen,categories}) => {
         Name: values.Name
       })
       .then(res => {
-        categories();
+        categories(); 
       })
       .catch(err => {
         console.warn(err);
