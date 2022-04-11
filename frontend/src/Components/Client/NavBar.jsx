@@ -24,10 +24,10 @@ export default function NavBar() {
   //   }
   // )
 
-  const { t } = useTranslation();
-  function handleClick(lang) {
-    i18next.changeLanguage(lang)
-  }
+  // const { t } = useTranslation();
+  // function handleClick(lang) {
+  //   i18next.changeLanguage(lang)
+  // }
   
   return (
     <div className="container mx-auto p-5">

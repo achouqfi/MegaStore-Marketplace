@@ -6,10 +6,13 @@ import Form from '../../Components/SuperAdmin/Form'
 
 const AdminGestion = () => {
   return (
-    <div>
+    <div className='flex bg-gray-100'>
         <Sidebar/>
+        <div className='w-full'>
         <Table/>
-        <Form/>
+        <Form/> 
+        </div>
+        
     </div>
   )
 }
