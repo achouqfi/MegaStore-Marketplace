@@ -9,13 +9,13 @@ import Typecompte from "../../vendeur/selecttypecompte/index";
 import { FilePond, registerPlugin } from 'react-filepond'
 
 const VendeurSchema = Yup.object().shape({
-    // email: Yup.string().email("Invalid email address").required("Required"),
-    // password: Yup.string().min(2, "Too Short!").required("Required"),
-    // firstName: Yup.string().required("Required"),
-    // lastName: Yup.string().required("Required"),
-    // phone: Yup.string().required("Required"),
+    email: Yup.string().email("Invalid email address").required("Required"),
+    password: Yup.string().min(2, "Too Short!").required("Required"),
+    firstName: Yup.string().required("Required"),
+    lastName: Yup.string().required("Required"),
+    phone: Yup.string().required("Required"),
     // file: Yup.string().required("Required"),
-    // typecompte: Yup.string().required("Required"),
+    typecompte: Yup.string().required("Required"),
 
 });
 
@@ -132,12 +132,12 @@ export default function InscriptionForm() {
                     </div>
 
                     <div className="mt-4">
-                        <label
+                        {/* <label
                             htmlFor="email"
                             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
                             Document
-                        </label>
+                        </label> */}
                         {/* <input
                             type="file"
                             id="file"
@@ -148,9 +148,9 @@ export default function InscriptionForm() {
                             //multiple
                         /> */}
 
-                           <FilePond
+                           {/* <FilePond */}
                            
-                          />
+                          {/* /> */}
                         {/* {errors.file && touched.file ? (
                             <div className="text-red-500 font-semibold dark:text-red-400">
                                 {errors.file}
@@ -178,12 +178,12 @@ export default function InscriptionForm() {
                     </div>
 
                     <div className="mt-4">
-                        <label
+                        {/* <label
                             htmlFor="email"
                             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
                             TypeCompte
-                        </label>
+                        </label> */}
 
                     <Typecompte/>
 
