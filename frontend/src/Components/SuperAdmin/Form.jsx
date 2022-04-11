@@ -2,12 +2,16 @@ import axios from 'axios';
 import React, { useEffect } from 'react'
 import {useState} from 'react'
 import {create} from '../../Hooks/useHooks'
+import { MutateData} from '../../Hooks/superAhook'
 
 
 const Form = () => {
   const [firstname, setFirstname] = useState();
   const [lastname, setLastname] = useState();
   const [email, setEmail] = useState();
+
+  const { addAdmin } = MutateData()
+
   let values = {
     firstName: firstname,
     lastName: lastname,
@@ -42,7 +46,7 @@ const Form = () => {
       <label for="email" className="block mt-2 text-xs font-semibold text-gray-600 uppercase">E-mail</label>
       <input onChange={(e)=>setEmail(e.target.value)} id="email" type="email" name="email" placeholder="x.x@x.x" autocomplete="email" className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner" required />
       
-      <button onClick={senddata} type="submit" className="w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
+      <button onClick={() => addAdmin.mutate(values)} type="submit" className="w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
         Creat admin
       </button>
     </div>
