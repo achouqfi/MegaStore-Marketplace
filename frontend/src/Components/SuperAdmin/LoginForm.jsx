@@ -21,7 +21,7 @@ const SuperAdminSchema = Yup.object().shape({
           }}
           
           validationSchema={SuperAdminSchema}
-          onSubmit={async (values,) => {
+          onSubmit={async (values) => {
               login(values,role)
               nav("/superadmindash")
               

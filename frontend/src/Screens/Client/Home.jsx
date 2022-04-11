@@ -1,6 +1,6 @@
 import React from 'react'
 import Img from '../../Assets/hero-img.svg'
-import ProductsList from '../../Components/Client/Products'
+// import ProductsList from '../../Components/Client/Products'
 import { useTranslation } from 'react-i18next';
 
 export default function Home() {

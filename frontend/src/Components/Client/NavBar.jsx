@@ -35,7 +35,7 @@ export default function NavBar() {
       <div className="flex flex-row justify-center">
       <img src={Logo} className="w-10 h-10" />
         <h1 className="text-3xl text-gray-600 ml-2">MegaStore </h1>
-      </div>
+      {/* </div>
       <div className="mt-2">
         <Link to="/" className="text-gray-600 hover:text-purple-600 p-4 px-3 sm:px-4">{t('Navbar.1')}</Link>
         <Link to="#" className="text-gray-600 hover:text-purple-600 p-4 px-3 sm:px-4">{t('Navbar.2')}</Link>
@@ -48,9 +48,9 @@ export default function NavBar() {
           {dataProduct}
         </a>
         {/* { cookies.role.role === 'client' ?( */}
-          <Link to="/login" className="bg-gradient-to-r from-red-600 to-pink-500 rounded-full py-3 px-6 text-gray-50 uppercase ml-4 md:self-start ">
+          {/* <Link to="/login" className="bg-gradient-to-r from-red-600 to-pink-500 rounded-full py-3 px-6 text-gray-50 uppercase ml-4 md:self-start ">
             {t('Navbar.5')}
-          </Link>
+          </Link> */}
         {/* // ): cookies.role.role === 'client' ? ( */}
         {/* //   <button onClick={logoutMutation.mutate()} className="bg-gradient-to-r from-red-700 to-pink-700 rounded-full py-3 px-6 text-gray-50 uppercase ml-3 md:self-start ">
         //     {t('Navbar.7')}
@@ -64,7 +64,7 @@ export default function NavBar() {
           <button className="ml-2"  onClick={()=>handleClick('ko')} >
             <img src={Fr} alt="fr" height={20} width={20} />
           </button>
-      </div>
+      </div> */}
 
     </div>
     </div>
