@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-// import Error from '../Errors/index'
+import Error from '../Errors/index'
 import { Link, Navigate } from 'react-router-dom';
 import { login } from "../../../Hooks/useHooks";
+import { useNavigate } from "react-router-dom";
+import {  useMutation } from "react-query";
+import axios from "axios";
+import { useCookies } from 'react-cookie';
 
 const ClientSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email address").required("Required"),
@@ -11,6 +15,30 @@ const ClientSchema = Yup.object().shape({
 });
 
 export default function LoginForm() {
+    const [cookies, setCookie, removeCookie] = useCookies();
+    const navigate = useNavigate();
+    const [error, setError] = useState("");
+    let path = window.location.pathname
+    let role;
+    {
+        path === "/login" ? role="clients" : path === "/admin" ? role="admin" : null;
+    }
+
+    const loginMutation = useMutation(
+        (values) => 
+        axios 
+            .post( `http://localhost:4000/api/${role}/login`, values)
+            .then(res=>setCookie(role, res.data)),
+        {
+            
+          onSuccess: () => {
+            { path === '/admin'? navigate("/adminDash"): path === 'login'? navigate("/"): null }
+          },
+          onError: () => {
+            setError("wrong infos");
+          },
+        }
+      )
     return (
         <Formik
             initialValues={{
@@ -19,14 +47,14 @@ export default function LoginForm() {
             }}
             validationSchema={ClientSchema}
             onSubmit={async (values) => {
-                console.log(values);
-                // login(values, 'clients');
+                { path==='/admin' ? loginMutation.mutate(values) : loginMutation.mutate(values, 'clients') }
             }}
         >
             {({ errors, touched }) => (
                 <Form>
                     <h1 className="font-bold text-blue-600 text-xl">
-                        Bienvenue dans l'espace client authentifiez-vous
+                        {/* { path == "/login" ? "Bienvenue dans l'espace Client authentifiez-vous" : path == "/admin" ? "Bienvenue dans l'espace Admin authentifiez-vous" : null }  */}
+                        Bienvenue dans l'espace { path == "/login" ? "Client" : path == "/admin" ? "Admin" : null } authentifiez-vous
                     </h1>
                     {/* {<Error error={errors} />} */}
                     <div className="mt-4">
@@ -67,7 +95,7 @@ export default function LoginForm() {
                             </div>
                         ) : null}
                     </div>
-
+                    {loginMutation.isError && <Error error={error} />}
                     <div className="mt-8 flex justify-between">
                         <button
                             type="submit"
@@ -75,7 +103,7 @@ export default function LoginForm() {
                         >
                             Login
                         </button>
-                        <Link to="/inscription" className='text-blue-500 mt-1 underline pb-1'>Create account</Link>
+                        { path == "/login" ? <Link to="/inscription" className='text-blue-500 mt-1 underline pb-1'>Create account</Link> : null}
                     </div>
                 </Form>
             )}

@@ -1,0 +1,17 @@
+{
+  "welcome": {
+    "1": "Bienvenue sur la place de marché MegaStore",
+    "2": "NOTRE SIGNATURE DE MARQUE VA ICI.",
+    "3": "NOTRE DEVISE DE MARQUE VA ICI.",
+    "4": "ACHETEZ MAINTENANT"
+  },
+  "Navbar": {
+      "1": "Accueil",
+      "2": "Commande",
+      "3": "Produits",
+      "4": "Contact",
+      "5": "Login",
+      "6": "Inscription",
+      "7":"Deconnexion"
+  }
+}

@@ -11,6 +11,17 @@ const index = async (req, res) => {
     }
 }
 
+// get all categorie 
+const countcategotie = async (req, res) => {
+    try {
+        const categorie = await categories.count() 
+        res.status(200).json(categorie)
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+}
+
+
 
 // create new categorie
 const store = async (req, res) => {
@@ -33,7 +44,7 @@ const store = async (req, res) => {
 
 //delete categorie
 const deletecategorie = async (req, res) => {
-    const { id } = req.body
+    const id = req.params._id
     try {
         await categories.findByIdAndDelete(id) //delete categorie by id
         res.status(200).json({ message: "categorie deleted successfully" })
@@ -44,21 +55,24 @@ const deletecategorie = async (req, res) => {
 
 //Update  categorie
 const update= async (req, res) => {
-    //get body from http req 
-    const {Name,id} = req.body
-    const record = { _id: id };
-   // console.log(req.body);
+    const {Name} = req.body
+    const id = req.params._id
+
     try {
-        if (!Name)
-            return res.status(400).json({ message: "Please fill all the fields" }) // input validation
+        // if (!Name)
+        //     return res.status(400).json({ message: "Please fill all the fields" }) // input validation
       
-         const updatecategorie = await categories.updateOne(record, {
-                $set: {
-                    Name:Name,
-                },
-              });
+        //  const updatecategorie = await categories.updateOne(record, {   
+        //     $set: {
+        //         Name:Name,
+        //     },
+        //     }
+        // );
      
-        res.status(200).json({ updatecategorie })
+        // res.status(200).json({ updatecategorie })
+        !Name ? res.status(400).json({ message: "Please fill all the fields" }) : await categories.findByIdAndUpdate(id , req.body , {new: true})
+        res.status(200).json({ message: "updated successfully !" })    
+
 
     } catch (err) {
         res.status(400).json({ error: err.message }) // req error
@@ -70,5 +84,6 @@ module.exports = {
     index,
     store,
     deletecategorie,
-    update
+    update,
+    countcategotie
 };

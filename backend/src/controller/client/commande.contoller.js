@@ -5,12 +5,61 @@ const produits = require('../../models/vendeur/produit.model')
 // get all commandes 
 const index = async (req, res) => {
     try {
-        const commandes = await commande.find()
+        const commandes = await commande.find().populate('produit').populate('clients')
         res.status(200).json(commandes)
     } catch (error) {
         res.status(404).json({ message: error.message })
     }
 }
+
+
+// count all commande 
+const countcommande = async (req, res) => {
+    id=req.params
+    const idvendeur1=JSON.stringify(id.id).replace(/["]+/g, '')
+    // console.log("2",idvendeur1);
+    try {
+        let count=0;
+        const commandes = await commande.find().populate("produit")
+
+        commandes.forEach(element => {
+            const idvendeur=JSON.stringify(element.produit.vendeur._id).replace(/["]+/g, '')
+          
+            // console.log("1",idvendeur);
+            
+            if(idvendeur == idvendeur1){
+                count++;
+            }
+        });
+        res.status(200).json(count)
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+}
+
+// count all vendeur 
+const commandevendeur = async (req, res) => {
+    id=req.params
+    const idvendeur1=JSON.stringify(id.id).replace(/["]+/g, '')
+    
+    try {
+         data=[]
+        const commandes = await commande.find().populate("produit").populate('clients')
+
+        commandes.forEach(element => {
+            const idvendeur=JSON.stringify(element.produit.vendeur._id).replace(/["]+/g, '')
+          
+            if(idvendeur == idvendeur1){
+                data.push(element)
+            }
+        });
+        res.status(200).json(data)
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+}
+
+
 
 // add new commande
 const store = async (req, res) => {
@@ -54,5 +103,7 @@ const updateStatus  = async (req, res) => {
 module.exports = {
     index,
     store,
-    updateStatus
+    updateStatus,
+    countcommande,
+    commandevendeur
 };

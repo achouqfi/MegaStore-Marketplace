@@ -1,0 +1,17 @@
+{
+    "welcome": {
+      "1": "Welcome to MegaStore Market Place",
+      "2": "Our brand tagline goes here.",
+      "3": "Our brand motto goes here.",
+      "4": "Shop Now"
+    },
+    "Navbar": {
+        "1": "Home",
+        "2": "Shop",
+        "3": "Products",
+        "4": "Contact",
+        "5": "Login",
+        "6": "Register",
+        "7": "Logout"
+    }
+  }

@@ -10,15 +10,19 @@ const typecomptes =require("../../controller/vendeur/typecompte.controller");
 const loginvendeur = async (req, res) => {
     //get body from http req 
     const { email, password } = req.body
+    // console.log(req.body);
     try {
         if (!email || !password) return res.status(404).json({ message: "Please fill all the fields" }) // input validation
-        const existingvendeur = await vendeurs.findOne({ email }) // find user data with email
-        if (!existingvendeur) return res.status(404).json({ message: "vendeur not found"}) // error message
-        comparePassword(password, existingvendeur, res) // comporassion password && data => jwt
+        const existingVendeur = await vendeurs.findOne({ email }) // find user data with email
+        if (!existingVendeur) return res.status(404).json({ message: "vendeur not found"}) // error message
+            // console.log(existingClient);
+        const role = 'vendeur';
+        comparePassword(password, existingVendeur, role, res) // comporassion password && data => jwt
     } catch (error) {
         res.status(404).json({ message: error.message }) // req error
     }
 }
+
 
 // get all vendeur 
 const index = async (req, res) => {
@@ -35,17 +39,17 @@ const index = async (req, res) => {
 const store = async (req, res) => {
     //get body from http req 
     const { email, firstName, lastName ,password, phone ,typecompte} = req.body
-    const doc=req.file.path
+    //  const doc=req.file.path
    
-      console.log(doc);
+     //console.log(req.body);
     
     try {
-        if (!email || !firstName || !lastName  || !password || !doc || !phone || !typecompte )
+        if (!email || !firstName || !lastName  || !password || !phone || !typecompte  )
             return res.status(400).json({ message: "Please fill all the fields" }) // input validation
 
      
         const hashedPassword = await bcrypt.hash(password, 10) //hashing password 
-        const status="en cours"
+         const status="en cours"
         //validation email
         let regix = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         let emailvalide=regix.test(email);
@@ -57,12 +61,12 @@ const store = async (req, res) => {
                 lastName,
                 password: hashedPassword,
                 phone,
-                doc,
+                // doc,
                 typecompte:typecompte,
                 status:status
             })
              // console.log(req.body);
-                PasswordMail(email , lastName , firstName ,typecompte,doc,status) //send email
+               // PasswordMail(email , lastName , firstName ,typecompte,doc,status) //send email
                 res.status(200).json({ newVendeur })
 
         }else{
@@ -76,7 +80,8 @@ const store = async (req, res) => {
 
 //delete vendeur
 const deletevendeur = async (req, res) => {
-    const { id } = req.body
+    // const { id } = req.body
+    const id=req.params
     try {
         await vendeurs.findByIdAndDelete(id) //delete vendeur by id
         res
@@ -88,7 +93,8 @@ const deletevendeur = async (req, res) => {
 //Update type compte vendeur par (chiffre d’affaire)
 const updatetypecompte = async (req, res) => {
     //get body from http req 
-    const {id} = req.body
+    // const {id} = req.body
+    const id=req.params
     const record = { _id: id };
     const Commande = await commande.find()
     const Produit = await produits.find()
@@ -160,10 +166,11 @@ const updatetypecompte = async (req, res) => {
     }
  }
 
-// //Update status compte vendeur
+//Update status compte vendeur
 const updatestatus = async (req, res) => {
     //get body from http req 
     const {status} = req.body
+    const id=req.params
     const record = { _id: id };
     try {
         if (!status)

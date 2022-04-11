@@ -37,7 +37,8 @@ const store = async (req, res) => {
 
 //delete typecompte
 const deletetypecompte = async (req, res) => {
-    const { id } = req.body
+    // const { id } = req.body
+    const id=req.params
     try {
         await typecomptes.findByIdAndDelete(id) //delete typecompte by id
         res.status(200).json({ message: "typecompte deleted successfully" })
@@ -49,7 +50,8 @@ const deletetypecompte = async (req, res) => {
 //Update  typecompte
 const update = async (req, res) => {
     //get body from http req 
-    const {Name,limiteproduit,chiffredaffaire,id} = req.body
+    const {Name,limiteproduit,chiffredaffaire} = req.body
+    const id=req.params
     const record = { _id: id };
 
     //console.log(req.body);

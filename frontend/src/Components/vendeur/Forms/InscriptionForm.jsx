@@ -4,21 +4,26 @@ import * as Yup from "yup";
 // import Error from '../Errors/index'
 import { create } from "../../../Hooks/useHooks";
 import {useState} from 'react'
+import ModePaiement from "../../../Components/vendeur/Forms/Modepaiement";
+import Typecompte from "../../vendeur/selecttypecompte/index";
+import { FilePond, registerPlugin } from 'react-filepond'
 
 const VendeurSchema = Yup.object().shape({
-    email: Yup.string().email("Invalid email address").required("Required"),
-    password: Yup.string().min(2, "Too Short!").required("Required"),
-    firstName: Yup.string().required("Required"),
-    lastName: Yup.string().required("Required"),
-    phone: Yup.string().required("Required"),
-    file: Yup.string().required("Required"),
+    // email: Yup.string().email("Invalid email address").required("Required"),
+    // password: Yup.string().min(2, "Too Short!").required("Required"),
+    // firstName: Yup.string().required("Required"),
+    // lastName: Yup.string().required("Required"),
+    // phone: Yup.string().required("Required"),
+    // file: Yup.string().required("Required"),
+    // typecompte: Yup.string().required("Required"),
+
 });
 
 export default function InscriptionForm() {
 
-
     return (
 
+       
         <Formik
             initialValues={{
                 email: "",
@@ -26,15 +31,24 @@ export default function InscriptionForm() {
                 firstName: "",
                 lastName: "",
                 phone: "",
-                file:file
+                // files:"",
+                typecompte:""
+               
             }}
+        
+           
             validationSchema={VendeurSchema}
+        
             onSubmit={async (values) => {
-                 create(values,'vendeurs')
-            }}
+                create(values,'vendeurs')
+
+                }
+                
+            }
         >
-            {({ errors, touched }) => (
-                <Form>
+  
+            {({ errors, touched, values ,setFieldValue ,files,setFiles }) => (
+                <Form enctype="multipart/form-data">
                     <h1 className="font-bold text-blue-600 text-xl">
                         Bienvenue dans l'espace vendeur Incrivez-vous maintenant    
                     </h1>
@@ -77,6 +91,7 @@ export default function InscriptionForm() {
                             </div>
                         ) : null}
                     </div>
+                   
                     <div className="mt-4">
                         <label
                             htmlFor="email"
@@ -123,20 +138,24 @@ export default function InscriptionForm() {
                         >
                             Document
                         </label>
-                        <input
+                        {/* <input
                             type="file"
                             id="file"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             name="file"
-                            onchange={setfile(file)}
-                            value={file}
-                            multiple
-                        />
-                        {errors.file && touched.file ? (
+                            onChange={(event) => {
+                                setFieldValue("file", event.currentTarget.files[0]);}}
+                            //multiple
+                        /> */}
+
+                           <FilePond
+                           
+                          />
+                        {/* {errors.file && touched.file ? (
                             <div className="text-red-500 font-semibold dark:text-red-400">
                                 {errors.file}
                             </div>
-                        ) : null}
+                        ) : null} */}
                     </div>
                     <div className="mt-4">
                         <label
@@ -156,6 +175,49 @@ export default function InscriptionForm() {
                                 {errors.password}
                             </div>
                         ) : null}
+                    </div>
+
+                    <div className="mt-4">
+                        <label
+                            htmlFor="email"
+                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >
+                            TypeCompte
+                        </label>
+
+                    <Typecompte/>
+
+                        {errors.typecompte && touched.typecompte ? (
+                            <div className="text-red-500 font-semibold dark:text-red-400">
+                                {errors.typecompte}
+                            </div>
+                        ) : null}
+                    
+                      
+                    { values.typecompte == 'Pro'  ?(
+                   <>
+                        <h1>Prix de compte :3000 dh</h1>  
+                        <ModePaiement/>
+                   </>
+
+                     ):values.typecompte == 'Expert' ? (
+                   <>
+                      <h1>Prix de compte :5000 dh</h1>  
+                      <ModePaiement/>   
+                   </>
+                ):null}
+
+                  
+            { values.modepaiement == 'Paiement par Carte' ?(
+                   <>
+                      tes1      
+                   </>
+
+            ):values.modepaiement == 'Virement Bancaire' ? (
+                   <>
+                      tes2      
+                   </>
+            ):null}
                     </div>
 
                     <div className="mt-8 flex justify-between">

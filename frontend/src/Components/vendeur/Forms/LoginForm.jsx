@@ -1,25 +1,53 @@
-import React from 'react'
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 // import Error from '../Errors/index'
 import { Link, Navigate } from 'react-router-dom';
-import { login } from "../../../Hooks/useHooks";
+// import { login } from "../../../Hooks/useHooks";
+import { useCookies } from 'react-cookie';
+import {  useMutation } from "react-query";
+import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react'
+import axios from "axios";
 
 const VendeurSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email address").required("Required"),
-    password: Yup.string().min(2, "Too Short!").required("Required"),
+    password: Yup.string().min(8, "Too Short!").required("Required"),
 });
 
+
 export default function LoginForm() {
+
+    const [cookies, setCookie, removeCookie] = useCookies();
+    const navigate = useNavigate();
+    const [error, setError] = useState("");
+
+    const loginMutation = useMutation(
+        (values) => 
+        // login(values, 'vendeur')
+        axios 
+            .post("http://localhost:4000/api/vendeurs/login", values)
+            .then(res=>(setCookie('role', res.data.role ),setCookie('id', res.data.id ))),
+        {
+          onSuccess: () => {
+            navigate("/vendeur/dashboard");
+          },
+          onError: () => {
+            setError("wrong creds");
+          },
+        }
+      )
+
+
     return (
         <Formik
             initialValues={{
                 email: "",
-                password: "",
+                password: ""
             }}
+
             validationSchema={VendeurSchema}
             onSubmit={async (values) => {
-                login(values, 'vendeurs');
+                loginMutation.mutate(values);
             }}
         >
             {({ errors, touched }) => (

@@ -11,8 +11,7 @@ const SuperAdminSchema = Yup.object().shape({
 
   const LoginForm=()=> {
     let role = "superAdmin"
-    let destination = "inscription"
-
+    let nav = useNavigate()
 
   return (
       <Formik
@@ -23,7 +22,9 @@ const SuperAdminSchema = Yup.object().shape({
           
           validationSchema={SuperAdminSchema}
           onSubmit={async (values,) => {
-              login(values,role,destination)
+              login(values,role)
+              nav("/superadmindash")
+              
           }}
       >
           {({ errors, touched }) => (
