@@ -2,29 +2,32 @@ import React from "react";
 import { useState,useEffect } from "react";
 import {drop} from '../../Hooks/useHooks'
 import axios from "axios";
-
+import {FetchData , MutateData} from '../../Hooks/superAhook'
+// import {getData} from "../../Hooks/superAhook"
 
 function Table() {
-  const [data, setData] = useState();
-  useEffect(() => {
-    axios
-    .get("http://localhost:4000/api/admin/")
-    .then((res) => {
-      setData(res.data);
-    })
-  }, []);
+  // const [data, setData] = useState();
+  // useEffect(() => {
+  //   axios
+  //   .get("http://localhost:4000/api/admin/")
+  //   .then((res) => {
+  //     setData(res.data);
+  //   })
+  // }, []);
 
-  const deleteAdmin = (id) => {
+  // const deleteAdmin = (id) => {
     
-    axios
-        .delete(`http://localhost:4000/api/admin/delete/${id}`)
-        .then(res => console.log(res))
-        .catch(err=> console.log(err))
-  }
+  //   axios
+  //       .delete(`http://localhost:4000/api/admin/delete/${id}`)
+  //       .then(res => console.log(res))
+  //       .catch(err=> console.log(err))
+  // }
 
  
+const { query } = FetchData();
+const { deleteAdmin } = MutateData()
 
-  
+
   return (
     <div>
       <div className="container mx-auto px-4 sm:px-8 w-3/4">
@@ -67,8 +70,8 @@ function Table() {
                   </tr>
                 </thead>
                 <tbody>
-                  {data &&
-                    data.map((Admin) => (
+                  {query &&
+                    query.data?.map((Admin) => (
                       <tr>
                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                           <div className="flex items-center">
@@ -103,7 +106,7 @@ function Table() {
                           <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
                             Accepter
                           </button>
-                          <button onClick={()=>deleteAdmin(Admin._id)} className="bg-red-700  text-white font-semibold  py-2 px-4 border border-white hover:border-transparent rounded">
+                          <button onClick={()=>deleteAdmin.mutate(Admin._id)} className="bg-red-700  text-white font-semibold  py-2 px-4 border border-white hover:border-transparent rounded">
                             supprimer
                           </button>
 
