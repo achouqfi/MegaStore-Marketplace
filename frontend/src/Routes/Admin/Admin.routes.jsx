@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Categories from '../../Components/Admin/Categories'
 import AdminDash from '../../Screens/Admin/AdminDash'
 import AuthAdmin from '../../Screens/Admin/AuthAdmin'
-import PrivateRoutes from './PrivateRoutes'
+// import PrivateRoutes from './PrivateRoutes'
 
 function AdminRoutes() {
   return (
@@ -13,9 +13,9 @@ function AdminRoutes() {
         <Route path="/admin" element={<AuthAdmin />} />
 
         <Route path="/adminDash" element={
-         
-          <AdminDash />
-        
+          // <PrivateRoutes role='admin'>
+            <AdminDash />
+          // </PrivateRoutes>
         }/>
 
         <Route path="/categories" element={
